@@ -1,9 +1,45 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Overview plus detail line chart. Value added by food manufacturing and by all other manufacturing, indexed to 2006-07 = 100. Brushing the small overview chart zooms the detail chart (Shneiderman: overview, zoom; focus plus context).",
+  "description": "Line chart with constrained zoom (Munzner, chapter 11). Value added by food manufacturing and by all other manufacturing, indexed so the year to June 2007 equals 100. Three period buttons are preset viewpoints. When one is picked, js/main.js animates the x and y scale limits (x0, x1, y0, y1) from the old view to the new one, so the change is an animated transition rather than a jump cut.",
   "data": {
     "url": "data/clean/manufacturing_trend.csv"
   },
+  "params": [
+    {
+      "name": "period",
+      "value": "all",
+      "bind": {
+        "input": "radio",
+        "options": [
+          "all",
+          "early",
+          "recent"
+        ],
+        "labels": [
+          "All years, 2007 to 2025",
+          "First decade, 2007 to 2016",
+          "Recent years, 2019 to 2025"
+        ],
+        "name": "Zoom to "
+      }
+    },
+    {
+      "name": "x0",
+      "value": 2007
+    },
+    {
+      "name": "x1",
+      "value": 2025
+    },
+    {
+      "name": "y0",
+      "value": 90
+    },
+    {
+      "name": "y1",
+      "value": 220
+    }
+  ],
   "transform": [
     {
       "filter": "datum['Measure'] == 'Industry value added (million dollars)'"
@@ -43,239 +79,259 @@
       "as": "Index"
     }
   ],
-  "vconcat": [
+  "width": "container",
+  "height": 320,
+  "layer": [
     {
-      "width": "container",
-      "height": 280,
-      "layer": [
-        {
-          "mark": {
-            "type": "line",
-            "strokeWidth": 2.5,
-            "interpolate": "monotone",
-            "clip": true
-          },
-          "encoding": {
-            "x": {
-              "field": "Year ending June",
-              "type": "quantitative",
-              "scale": {
-                "domain": {
-                  "param": "brush"
-                },
-                "nice": false
-              },
-              "axis": {
-                "title": null,
-                "format": "d",
-                "tickMinStep": 1,
-                "grid": false
-              }
-            },
-            "y": {
-              "field": "Index",
-              "type": "quantitative",
-              "title": "Index, 2006–07 equals 100",
-              "scale": {
-                "zero": false
-              },
-              "axis": {
-                "tickCount": 5
-              }
-            },
-            "color": {
-              "field": "Industry",
-              "type": "nominal",
-              "scale": {
-                "domain": [
-                  "Food product manufacturing",
-                  "All other manufacturing"
-                ],
-                "range": [
-                  "#eb6834",
-                  "#8a837a"
-                ]
-              },
-              "legend": {
-                "orient": "top",
-                "title": null,
-                "direction": "horizontal",
-                "symbolType": "stroke",
-                "symbolStrokeWidth": 3,
-                "columnPadding": 24,
-                "labelFontSize": 13,
-                "labelLimit": 300,
-                "labelExpr": "datum.label == 'Food product manufacturing' ? 'Food factories' : 'All other factories'"
-              }
-            }
-          }
-        },
-        {
-          "params": [
-            {
-              "name": "hover",
-              "select": {
-                "type": "point",
-                "encodings": [
-                  "x"
-                ],
-                "nearest": true,
-                "on": "pointerover",
-                "clear": "pointerout"
-              }
-            }
-          ],
-          "mark": {
-            "type": "point",
-            "filled": true,
-            "size": 70,
-            "clip": true
-          },
-          "encoding": {
-            "x": {
-              "field": "Year ending June",
-              "type": "quantitative",
-              "scale": {
-                "domain": {
-                  "param": "brush"
-                }
-              }
-            },
-            "y": {
-              "field": "Index",
-              "type": "quantitative"
-            },
-            "color": {
-              "field": "Industry",
-              "type": "nominal",
-              "legend": null
-            },
-            "opacity": {
-              "condition": {
-                "param": "hover",
-                "empty": false,
-                "value": 1
-              },
-              "value": 0
-            },
-            "tooltip": [
-              {
-                "field": "Year",
-                "type": "nominal",
-                "title": "Financial year"
-              },
-              {
-                "field": "Industry",
-                "type": "nominal",
-                "title": "Industry"
-              },
-              {
-                "field": "Index",
-                "type": "quantitative",
-                "title": "Index (2006–07 equals 100)",
-                "format": ".1f"
-              },
-              {
-                "field": "Value",
-                "type": "quantitative",
-                "title": "Value added (million dollars)",
-                "format": ",.0f"
-              }
-            ]
-          }
-        },
-        {
-          "transform": [
-            {
-              "filter": {
-                "param": "hover",
-                "empty": false
-              }
-            }
-          ],
-          "mark": {
-            "type": "rule",
-            "color": "#cfc8bc",
-            "strokeWidth": 1
-          },
-          "encoding": {
-            "x": {
-              "field": "Year ending June",
-              "type": "quantitative",
-              "scale": {
-                "domain": {
-                  "param": "brush"
-                }
-              }
-            }
-          }
-        },
-        {
-          "data": {
-            "values": [
-              {
-                "y": 100
-              }
-            ]
-          },
-          "mark": {
-            "type": "rule",
-            "strokeDash": [
-              4,
-              4
-            ],
-            "color": "#8a837a",
-            "strokeWidth": 1
-          },
-          "encoding": {
-            "y": {
-              "field": "y",
-              "type": "quantitative"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "width": "container",
-      "height": 60,
-      "params": [
-        {
-          "name": "brush",
-          "select": {
-            "type": "interval",
-            "encodings": [
-              "x"
-            ]
-          }
-        }
-      ],
       "mark": {
         "type": "line",
-        "strokeWidth": 1.5,
-        "interpolate": "monotone"
+        "strokeWidth": 2.5,
+        "interpolate": "monotone",
+        "clip": true
       },
       "encoding": {
         "x": {
           "field": "Year ending June",
           "type": "quantitative",
+          "scale": {
+            "nice": false,
+            "domain": {
+              "expr": "[x0, x1]"
+            }
+          },
           "axis": {
-            "title": "Year ending June (drag here to zoom)",
+            "title": "Year ending June",
             "format": "d",
             "tickMinStep": 1,
             "grid": false
-          },
+          }
+        },
+        "y": {
+          "field": "Index",
+          "type": "quantitative",
+          "title": "Index, year to June 2007 equals 100",
           "scale": {
+            "zero": false,
+            "domain": {
+              "expr": "[y0, y1]"
+            },
+            "nice": false
+          },
+          "axis": {
+            "tickCount": 5
+          }
+        },
+        "color": {
+          "field": "Industry",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Food product manufacturing",
+              "All other manufacturing"
+            ],
+            "range": [
+              "#4a2c1d",
+              "#a39b8f"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "title": null,
+            "direction": "horizontal",
+            "symbolType": "stroke",
+            "symbolStrokeWidth": 3,
+            "columnPadding": 24,
+            "labelFontSize": 13,
+            "labelLimit": 300,
+            "labelExpr": "datum.label == 'Food product manufacturing' ? 'Food factories' : 'All other factories'"
+          }
+        }
+      }
+    },
+    {
+      "params": [
+        {
+          "name": "hover",
+          "select": {
+            "type": "point",
+            "encodings": [
+              "x"
+            ],
+            "nearest": true,
+            "on": "pointerover",
+            "clear": "pointerout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 70,
+        "clip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "Year ending June",
+          "type": "quantitative",
+          "scale": {
+            "domain": {
+              "expr": "[x0, x1]"
+            },
             "nice": false
           }
         },
         "y": {
           "field": "Index",
           "type": "quantitative",
-          "axis": null,
           "scale": {
+            "domain": {
+              "expr": "[y0, y1]"
+            },
+            "nice": false,
             "zero": false
           }
+        },
+        "color": {
+          "field": "Industry",
+          "type": "nominal",
+          "legend": null
+        },
+        "opacity": {
+          "condition": {
+            "param": "hover",
+            "empty": false,
+            "value": 1
+          },
+          "value": 0
+        },
+        "tooltip": [
+          {
+            "field": "Year",
+            "type": "nominal",
+            "title": "Financial year"
+          },
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Industry"
+          },
+          {
+            "field": "Index",
+            "type": "quantitative",
+            "title": "Index (year to June 2007 equals 100)",
+            "format": ".1f"
+          },
+          {
+            "field": "Value",
+            "type": "quantitative",
+            "title": "Value added (million dollars)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "param": "hover",
+            "empty": false
+          }
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#cfc8bc",
+        "strokeWidth": 1,
+        "clip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "Year ending June",
+          "type": "quantitative",
+          "scale": {
+            "domain": {
+              "expr": "[x0, x1]"
+            },
+            "nice": false
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "y": 100
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          4,
+          4
+        ],
+        "color": "#8a837a",
+        "strokeWidth": 1,
+        "clip": true
+      },
+      "encoding": {
+        "y": {
+          "field": "y",
+          "type": "quantitative",
+          "scale": {
+            "domain": {
+              "expr": "[y0, y1]"
+            },
+            "nice": false,
+            "zero": false
+          }
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Year ending June'] == floor(x1)"
+        },
+        {
+          "calculate": "(datum['Index'] >= 100 ? '+' : '') + format(datum['Index'] - 100, '.0f') + '% since 2007'",
+          "as": "Growth label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 12.5,
+        "fontWeight": "bold",
+        "clip": false
+      },
+      "encoding": {
+        "x": {
+          "field": "Year ending June",
+          "type": "quantitative",
+          "scale": {
+            "nice": false,
+            "domain": {
+              "expr": "[x0, x1]"
+            }
+          }
+        },
+        "y": {
+          "field": "Index",
+          "type": "quantitative",
+          "scale": {
+            "domain": {
+              "expr": "[y0, y1]"
+            },
+            "nice": false,
+            "zero": false
+          }
+        },
+        "text": {
+          "field": "Growth label"
         },
         "color": {
           "field": "Industry",
@@ -290,13 +346,14 @@
       "color": "shared"
     }
   },
-  "config": {
-    "concat": {
-      "spacing": 12
-    }
-  },
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
+  },
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "bottom": 5,
+    "right": 120
   }
 }
