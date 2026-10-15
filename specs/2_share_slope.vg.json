@@ -1,0 +1,233 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Slope chart. Each manufacturing industry's share of total manufacturing value added in 2006-07 and 2024-25. Food is highlighted; machinery, metal products and metals (the biggest fall) are labelled directly.",
+  "width": "container",
+  "height": 420,
+  "data": {
+    "url": "data/clean/manufacturing_share.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Share of manufacturing (per cent)'])",
+      "as": "Share"
+    },
+    {
+      "calculate": "datum['Industry'] == 'Food products'",
+      "as": "Is food"
+    },
+    {
+      "calculate": "datum['Is food'] ? 1 : 0",
+      "as": "Food first"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Year",
+          "as": "Last year"
+        }
+      ]
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "Size rank"
+        }
+      ],
+      "groupby": [
+        "Year"
+      ],
+      "sort": [
+        {
+          "field": "Share",
+          "order": "descending"
+        }
+      ]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "ordinal",
+      "scale": {
+        "padding": 0.6
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "domain": false,
+        "ticks": false,
+        "labelFontSize": 13,
+        "labelPadding": 8,
+        "orient": "top"
+      }
+    },
+    "y": {
+      "field": "Share",
+      "type": "quantitative",
+      "title": "Share of manufacturing value added (per cent)",
+      "axis": {
+        "grid": false,
+        "tickCount": 5
+      }
+    },
+    "detail": {
+      "field": "Industry"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum['Is food']",
+            "value": "#eb6834"
+          },
+          "value": "#cfc8bc"
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum['Is food']",
+            "value": 3.5
+          },
+          "value": 1.5
+        },
+        "order": {
+          "field": "Food first",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 70
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum['Is food']",
+            "value": "#eb6834"
+          },
+          "value": "#b9b1a4"
+        },
+        "tooltip": [
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Industry"
+          },
+          {
+            "field": "Year",
+            "type": "nominal",
+            "title": "Financial year"
+          },
+          {
+            "field": "Share",
+            "type": "quantitative",
+            "title": "Share of manufacturing (per cent)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Year'] == datum['Last year'] && indexof(['Machinery and equipment', 'Metal products', 'Metals'], datum['Industry']) >= 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "color": "#57514a"
+      },
+      "encoding": {
+        "text": {
+          "field": "Industry"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Year'] == datum['Last year'] && datum['Is food']"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12.5,
+        "fontWeight": "bold",
+        "color": "#b8481b"
+      },
+      "encoding": {
+        "text": {
+          "field": "Industry"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Is food']"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#b8481b"
+      },
+      "encoding": {
+        "text": {
+          "field": "Share",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Industry'] == 'Metals'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 12,
+        "color": "#57514a"
+      },
+      "encoding": {
+        "text": {
+          "field": "Share",
+          "type": "quantitative",
+          "format": ".0f"
+        }
+      }
+    }
+  ],
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "bottom": 5,
+    "right": 160
+  }
+}
