@@ -1,56 +1,217 @@
+/* ==================================================================
+   From Farm Gate to Supermarket Shelf
+   Titles: Archivo (sans serif). Everything else: Source Serif 4.
+   ================================================================== */
+
 :root {
-  --text: #1f2328;
-  --muted: #5b6370;
-  --bg: #fbfaf7;
-  --accent: #b5562b;
-  --rule: #e4e0d8;
+  --roast: #2f221b;        /* hero, closing and footer background */
+  --roast-2: #261b15;      /* footer */
+  --page: #faf6ef;         /* main page */
+  --page-alt: #f3ece1;     /* alternate sections */
+  --ink: #2b211b;          /* primary text */
+  --ink-2: #5c5048;        /* secondary text */
+  --ink-3: #8b7f75;        /* sources, captions */
+  --rule: #e4dacb;
+  --paprika: #c4532c;      /* section numbers, highlights (text safe) */
+  --accent: #eb6834;       /* food series colour in charts */
+  --wheat: #e9b763;        /* hero accents */
+  --cream: #f6eee2;        /* text on dark */
+
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 17px;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
-  font-family: "Source Serif 4", Georgia, serif;
-  font-weight: 600;
-  line-height: 1.2;
+h1, h2, h3, .chart-title, .story-number, .finding-label, .hero-kicker,
+.hero-stat-number, .footer-title, .footer-label, .hero-link, .toggle {
+  font-family: var(--sans);
 }
 
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+/* One sentence per line, about ten words each */
+.lines span { display: block; }
+.lines span span, .lines strong span { display: inline; }
+
+/* ------------------------------------------------------------ HERO */
 .hero {
-  text-align: center;
-  padding: 64px 16px 32px;
-  border-bottom: 1px solid var(--rule);
+  background: var(--roast);
+  color: var(--cream);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 72px 0;
 }
-.hero h1 { font-size: 2.6rem; margin: 0 0 8px; }
-.subtitle { color: var(--muted); font-size: 1.15rem; margin: 0; }
+.hero-kicker {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--wheat); margin: 0 0 20px;
+}
+.hero-title { margin: 0; line-height: 1; letter-spacing: -0.02em; }
+.hero-title-small { display: block; font-size: 3.4rem; font-weight: 500; color: var(--cream); }
+.hero-title-big { display: block; font-size: 5.4rem; font-weight: 900; color: #ffffff; margin-top: 10px; }
+.hero-rule { width: 80px; height: 4px; background: var(--wheat); margin: 36px 0 28px; border-radius: 2px; }
+.hero-subtitle { font-size: 1.35rem; font-weight: 600; margin: 0 0 18px; color: #ffffff; }
+.hero-intro { font-size: 1.1rem; color: #e3d6c5; margin: 0 0 48px; }
 
-/* Max width keeps everything visible on a small laptop without horizontal scroll */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px;
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  border-top: 1px solid rgba(246, 238, 226, 0.18); padding-top: 28px; margin-bottom: 40px;
+}
+.hero-stat-number { display: block; font-size: 2.6rem; font-weight: 800; color: var(--wheat); line-height: 1.05; }
+.hero-stat-label { display: block; font-size: 0.98rem; color: #d9cbb8; margin-top: 8px; max-width: 17rem; }
+
+.hero-link {
+  color: #ffffff; font-weight: 700; font-size: 0.95rem; text-decoration: none;
+  display: inline-flex; gap: 10px; align-items: center;
+}
+.hero-link span { color: var(--wheat); transition: transform 0.2s; }
+.hero-link:hover span { transform: translateY(4px); }
+
+/* ------------------------------------------------------------ STORY SECTIONS */
+.story { padding: 120px 0 40px; }
+.story-alt { background: var(--page-alt); }
+.story-head { margin-bottom: 56px; }
+.story-number {
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--paprika); margin: 0 0 14px;
+}
+.story h2, .closing h2 {
+  font-size: 3.4rem; font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 24px;
+}
+.story-intro { font-size: 1.2rem; color: var(--ink-2); margin: 0; }
+
+/* Chart on the left, key finding on the right */
+.split {
+  display: grid; grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  gap: 56px; align-items: center; margin-bottom: 96px;
+}
+.chart-block { margin: 0; min-width: 0; }
+.chart-wide { margin: 0 0 28px; }
+.chart-title { font-size: 1.35rem; font-weight: 700; margin: 0 0 4px; line-height: 1.25; }
+.chart-sub { font-size: 0.98rem; color: var(--ink-2); margin: 0 0 14px; }
+.chart { width: 100%; margin-top: 8px; }
+.source { font-size: 0.82rem; color: var(--ink-3); margin-top: 14px; }
+
+.hint {
+  font-size: 0.92rem; font-style: italic; color: var(--ink-2); margin: 0 0 8px;
+  padding-left: 22px; position: relative;
+}
+.hint::before { content: "☞"; font-style: normal; position: absolute; left: 0; color: var(--paprika); }
+
+/* Key finding boxes */
+.finding {
+  background: rgba(235, 104, 52, 0.08);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  padding: 26px 28px;
+}
+.finding-wide { margin-bottom: 96px; max-width: none; }
+.finding-label {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--paprika); margin: 0 0 12px;
+}
+.finding-text { font-size: 1.02rem; color: var(--ink-2); margin: 0; line-height: 1.6; }
+.finding-text strong { color: var(--ink); }
+
+/* Story keywords coloured like the chart marks they describe */
+.kw-food  { color: var(--paprika); font-weight: 700; }
+.kw-other { color: #6f655c; font-weight: 700; }
+.kw-more  { color: #1c5cab; font-weight: 700; }
+.kw-less  { color: #b8481b; font-weight: 700; }
+
+/* Eight food industries */
+.industry-icons {
+  list-style: none; padding: 0; margin: 0 0 96px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 32px;
+}
+.industry-icons li { display: grid; grid-template-columns: 44px 1fr; column-gap: 12px; align-items: start; }
+.industry-icons .icon { grid-row: span 2; font-size: 2rem; line-height: 1.1; }
+.industry-icons .icon-name {
+  font-family: var(--sans); font-weight: 700; font-size: 0.98rem; line-height: 1.3;
+  border-bottom: 3px solid var(--c); justify-self: start; padding-bottom: 2px;
+}
+.industry-icons .icon-desc { font-size: 0.88rem; color: var(--ink-2); margin-top: 4px; }
+
+/* Vega-Lite menus and sliders, shown above their chart */
+.vega-embed { display: flex !important; flex-direction: column; width: 100%; }
+.vega-embed .vega-bindings { order: -1; font-family: var(--sans); font-size: 0.9rem; margin: 0 0 10px; }
+.vega-bindings .vega-bind { margin-bottom: 8px; }
+.vega-bindings .vega-bind label { display: inline-flex; align-items: center; gap: 10px; }
+.vega-bind-name { font-weight: 700; min-width: 7.5rem; }
+.vega-bindings select {
+  font-family: var(--sans); font-size: 0.9rem; padding: 6px 10px;
+  border: 1px solid var(--rule); border-radius: 6px; background: #ffffff; color: var(--ink);
+}
+.vega-bindings input[type="range"] { accent-color: var(--accent); width: 240px; }
+#vg-tooltip-element { font-family: var(--serif) !important; font-size: 13px !important; }
+
+/* Show / hide the numbers */
+.toggle {
+  font-size: 0.85rem; font-weight: 700; color: var(--ink);
+  background: transparent; border: 1.5px solid var(--ink); border-radius: 999px;
+  padding: 7px 16px; margin-top: 12px; cursor: pointer;
+}
+.toggle:hover { background: var(--ink); color: var(--page); }
+.data-table table { border-collapse: collapse; width: 100%; margin-top: 14px; font-size: 0.92rem; }
+.data-table th { font-family: var(--sans); text-align: left; font-weight: 700; border-bottom: 2px solid var(--ink); padding: 6px 8px; }
+.data-table td { border-bottom: 1px solid var(--rule); padding: 6px 8px; }
+.data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------ CLOSING AND FOOTER */
+.closing { background: var(--roast); color: var(--cream); padding: 120px 0; }
+.closing .story-number { color: var(--wheat); }
+.closing h2 { color: #ffffff; }
+.closing-text { font-size: 1.3rem; color: #e3d6c5; margin: 0; }
+
+.footer { background: var(--roast-2); color: #cdbfad; padding: 72px 0 80px; font-size: 0.92rem; }
+.footer-title { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin: 0 0 6px; }
+.footer-meta { margin: 0; color: #b8a994; }
+.footer-meta span { margin: 0 10px; color: #6f6153; }
+.footer-rule { height: 1px; background: rgba(246, 238, 226, 0.14); margin: 32px 0 40px; }
+.footer-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; }
+.footer-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--wheat); margin: 0 0 14px;
+}
+.footer-label:not(:first-child) { margin-top: 32px; }
+.footer-sources { list-style: none; padding: 0; margin: 0; }
+.footer-sources li { margin-bottom: 14px; }
+.footer-sources a { color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(233, 183, 99, 0.5); }
+.footer-sources a:hover { border-bottom-color: var(--wheat); }
+.footer-sources span { display: block; color: #a99a87; margin-top: 2px; }
+.footer-text { margin: 0; line-height: 1.65; }
+.footer code { font-size: 0.85em; color: var(--wheat); }
+
+/* ------------------------------------------------------------ SCROLL REVEAL */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .reveal-delay { transition-delay: 0.15s; }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-section {
-  padding: 48px 0;
-  border-bottom: 1px solid var(--rule);
+/* ------------------------------------------------------------ SMALLER SCREENS */
+@media (max-width: 1000px) {
+  .split { grid-template-columns: 1fr; gap: 28px; }
+  .industry-icons { grid-template-columns: repeat(2, 1fr); }
+  .hero-title-big { font-size: 4rem; }
+  .story h2, .closing h2 { font-size: 2.6rem; }
 }
-
-/* Readable line length for body text */
-.lead, section > p { max-width: 68ch; }
-
-.chart { width: 100%; margin: 16px 0; }
-
-.annotation {
-  color: var(--muted);
-  font-size: 0.95rem;
-  padding-left: 16px;
-  border-left: 3px solid var(--accent);
+@media (max-width: 640px) {
+  .wrap { padding: 0 20px; }
+  .hero-stats, .footer-grid { grid-template-columns: 1fr; }
+  .hero-title-small { font-size: 2.2rem; }
+  .hero-title-big { font-size: 2.8rem; }
 }
-
-.meta { font-size: 0.9rem; color: var(--muted); padding-top: 32px; padding-bottom: 48px; }
