@@ -1,0 +1,268 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Choropleth map of Australian states. Colour shows the share of each state's manufacturing workers who work in food manufacturing, in five equal classes. A menu filters by food industry and a slider picks the year (Shneiderman: filter). Classes stay fixed for each industry across years, so colour changes always mean real changes.",
+  "width": "container",
+  "height": 430,
+  "params": [
+    {
+      "name": "industry",
+      "value": "All food industries",
+      "bind": {
+        "input": "select",
+        "name": "Food industry ",
+        "options": [
+          "All food industries",
+          "Meat products",
+          "Bakery products",
+          "Dairy products",
+          "Fruit and vegetables",
+          "Grain and cereal products",
+          "Sugar and confectionery",
+          "Seafood",
+          "Other food products"
+        ]
+      }
+    },
+    {
+      "name": "year",
+      "value": 2025,
+      "bind": {
+        "input": "range",
+        "min": 2006,
+        "max": 2025,
+        "step": 1,
+        "name": "Year "
+      }
+    }
+  ],
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/geo/au_states.topo.json",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ece7de",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
+      "transform": [
+        {
+          "calculate": "'No food manufacturing data for ' + datum.properties.name",
+          "as": "Note"
+        }
+      ],
+      "encoding": {
+        "tooltip": {
+          "field": "Note",
+          "type": "nominal",
+          "title": "Note"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/clean/food_jobs_by_state.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == industry"
+        },
+        {
+          "filter": "toNumber(datum['Year']) == year"
+        },
+        {
+          "calculate": "toNumber(datum['Share of state factory jobs (per cent)'])",
+          "as": "Share"
+        },
+        {
+          "calculate": "toNumber(datum['Workers (thousands)'])",
+          "as": "Workers"
+        },
+        {
+          "lookup": "State",
+          "from": {
+            "data": {
+              "url": "data/geo/au_states.topo.json",
+              "format": {
+                "type": "topojson",
+                "feature": "states"
+              }
+            },
+            "key": "properties.name"
+          },
+          "as": "geo"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#ffffff",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "Share",
+          "type": "quantitative",
+          "title": "Share of the state's factory workers (per cent)",
+          "scale": {
+            "type": "quantize",
+            "domain": {
+              "expr": "industry == 'All food industries' ? [0, 40] : industry == 'Bakery products' ? [0, 30] : industry == 'Dairy products' ? [0, 10] : industry == 'Fruit and vegetables' ? [0, 10] : industry == 'Grain and cereal products' ? [0, 10] : industry == 'Meat products' ? [0, 15] : industry == 'Other food products' ? [0, 10] : industry == 'Seafood' ? [0, 5] : industry == 'Sugar and confectionery' ? [0, 5] : [0, 50]"
+            },
+            "range": [
+              "#cde2fb",
+              "#86b6ef",
+              "#3987e5",
+              "#1c5cab",
+              "#0d366b"
+            ],
+            "nice": false
+          },
+          "legend": {
+            "orient": "bottom-left",
+            "direction": "horizontal",
+            "titleLimit": 320,
+            "format": ".0f",
+            "symbolType": "square",
+            "symbolSize": 180
+          }
+        },
+        "tooltip": [
+          {
+            "field": "State",
+            "type": "nominal",
+            "title": "State or territory"
+          },
+          {
+            "field": "Year",
+            "type": "nominal",
+            "title": "Year"
+          },
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Food industry"
+          },
+          {
+            "field": "Workers",
+            "type": "quantitative",
+            "title": "Workers (thousands)",
+            "format": ".1f"
+          },
+          {
+            "field": "Share",
+            "type": "quantitative",
+            "title": "Share of the state's factory workers (per cent)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/geo/state_labels.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['State'] != 'Australian Capital Territory'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#23201c",
+        "stroke": "#ffffff",
+        "strokeWidth": 3,
+        "strokeOpacity": 0.7
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "State"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/geo/state_labels.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['State'] != 'Australian Capital Territory'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 600,
+        "color": "#23201c"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "State"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "x": 12,
+        "y": 10,
+        "align": "left",
+        "baseline": "top",
+        "font": "Archivo, Arial, sans-serif",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "color": "#b8481b",
+        "text": {
+          "expr": "'Showing: ' + industry + ', ' + year"
+        }
+      }
+    }
+  ],
+  "view": {
+    "fill": "#e3ecf2",
+    "stroke": null,
+    "cornerRadius": 6
+  }
+}
