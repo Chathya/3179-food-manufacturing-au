@@ -107,7 +107,10 @@
       ],
       "mark": {
         "type": "geoshape",
-        "fill": "#fbd3bf",
+        "fill": {
+          "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+        },
+        "fillOpacity": 0.22,
         "stroke": "#d9d2c6",
         "strokeWidth": 0.4
       },
@@ -258,7 +261,9 @@
           ],
           "mark": {
             "type": "rule",
-            "color": "#eb6834",
+            "color": {
+              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+            },
             "strokeCap": "round"
           },
           "encoding": {
@@ -290,7 +295,7 @@
               "legend": {
                 "orient": "bottom",
                 "format": ",.0f",
-                "symbolStrokeColor": "#eb6834",
+                "symbolStrokeColor": "#8b7f75",
                 "direction": "horizontal",
                 "tickCount": 4,
                 "values": [
@@ -335,7 +340,9 @@
         {
           "mark": {
             "type": "circle",
-            "color": "#b8481b",
+            "color": {
+              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+            },
             "size": 40,
             "stroke": "#ffffff",
             "strokeWidth": 1
@@ -436,9 +443,9 @@
           ],
           "mark": {
             "type": "text",
-            "align": "center",
-            "dx": 0,
-            "dy": -14,
+            "align": "right",
+            "dx": -8,
+            "dy": -8,
             "fontSize": 12,
             "fontWeight": 600,
             "color": "#23201c",
@@ -526,9 +533,9 @@
           ],
           "mark": {
             "type": "text",
-            "align": "center",
-            "dx": 0,
-            "dy": -14,
+            "align": "right",
+            "dx": -8,
+            "dy": -8,
             "fontSize": 12,
             "fontWeight": 600,
             "color": "#23201c"
@@ -579,21 +586,37 @@
     {
       "data": {
         "values": [
-          {}
+          {
+            "Longitude": -158,
+            "Latitude": -14,
+            "Text": "United States: $8.3 billion,|nine tenths of it meat"
+          }
         ]
       },
+      "transform": [
+        {
+          "filter": "industry == 'All food industries'"
+        }
+      ],
       "mark": {
         "type": "text",
-        "x": 8,
-        "y": 8,
-        "align": "left",
-        "baseline": "top",
-        "font": "Archivo, Arial, sans-serif",
-        "fontSize": 18,
-        "fontWeight": 700,
-        "color": "#b8481b",
+        "lineBreak": "|",
+        "fontSize": 12.5,
+        "fontWeight": "bold",
+        "color": "#4a2c1d",
+        "align": "center"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
         "text": {
-          "expr": "'Showing: ' + industry"
+          "field": "Text"
         }
       }
     }
