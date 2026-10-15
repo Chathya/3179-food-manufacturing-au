@@ -1,0 +1,601 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Flow map on an Equal Earth world map centred on the Pacific, with ocean and latitude and longitude lines. Lines run from Australia to the fifteen biggest buyers of Australian manufactured food; line thickness shows export value. A menu filters by food industry (Shneiderman: filter).",
+  "width": "container",
+  "height": 440,
+  "params": [
+    {
+      "name": "industry",
+      "value": "All food industries",
+      "bind": {
+        "input": "select",
+        "name": "Food industry ",
+        "options": [
+          "All food industries",
+          "Meat products",
+          "Dairy products",
+          "Grain and cereal products",
+          "Sugar and confectionery",
+          "Seafood",
+          "Fruit and vegetables",
+          "Bakery products",
+          "Other food products"
+        ]
+      }
+    }
+  ],
+  "projection": {
+    "type": "equalEarth",
+    "rotate": [
+      -150,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e3ecf2",
+        "stroke": "#c9d8e3",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "graticule": {
+          "step": [
+            30,
+            30
+          ]
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "filled": false,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": {
+        "url": "data/geo/world-110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f4f0e8",
+        "stroke": "#d9d2c6",
+        "strokeWidth": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "data/clean/food_exports.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == industry"
+        },
+        {
+          "calculate": "toNumber(datum['Country number'])",
+          "as": "Country number"
+        },
+        {
+          "lookup": "Country number",
+          "from": {
+            "data": {
+              "url": "data/geo/world-110m.json",
+              "format": {
+                "type": "topojson",
+                "feature": "countries"
+              }
+            },
+            "key": "id"
+          },
+          "as": "geo"
+        },
+        {
+          "filter": "isValid(datum['geo'])"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#fbd3bf",
+        "stroke": "#d9d2c6",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "type": "nominal",
+            "title": "Destination"
+          },
+          {
+            "field": "Exports (million dollars)",
+            "type": "quantitative",
+            "title": "Food exports (million dollars)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Longitude": -28,
+            "Latitude": 60,
+            "Label": "60° North"
+          },
+          {
+            "Longitude": -28,
+            "Latitude": 30,
+            "Label": "30° North"
+          },
+          {
+            "Longitude": -28,
+            "Latitude": 0,
+            "Label": "Equator"
+          },
+          {
+            "Longitude": -28,
+            "Latitude": -30,
+            "Label": "30° South"
+          },
+          {
+            "Longitude": -28,
+            "Latitude": -60,
+            "Label": "60° South"
+          },
+          {
+            "Longitude": 60,
+            "Latitude": -72,
+            "Label": "60° East"
+          },
+          {
+            "Longitude": 120,
+            "Latitude": -72,
+            "Label": "120° East"
+          },
+          {
+            "Longitude": 180,
+            "Latitude": -72,
+            "Label": "180°"
+          },
+          {
+            "Longitude": -120,
+            "Latitude": -72,
+            "Label": "120° West"
+          },
+          {
+            "Longitude": -60,
+            "Latitude": -72,
+            "Label": "60° West"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "color": "#7f97a8",
+        "align": "left",
+        "dx": 2,
+        "dy": -5
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Label"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/clean/food_exports.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == industry"
+        },
+        {
+          "calculate": "toNumber(datum['Exports (million dollars)'])",
+          "as": "Exports"
+        },
+        {
+          "calculate": "toNumber(datum['Rank'])",
+          "as": "Rank"
+        },
+        {
+          "calculate": "toNumber(datum['Longitude'])",
+          "as": "Longitude"
+        },
+        {
+          "calculate": "toNumber(datum['Latitude'])",
+          "as": "Latitude"
+        },
+        {
+          "calculate": "133.8",
+          "as": "Origin longitude"
+        },
+        {
+          "calculate": "-25.3",
+          "as": "Origin latitude"
+        }
+      ],
+      "layer": [
+        {
+          "params": [
+            {
+              "name": "focus",
+              "select": {
+                "type": "point",
+                "fields": [
+                  "Country"
+                ],
+                "on": "pointerover",
+                "clear": "pointerout"
+              }
+            }
+          ],
+          "mark": {
+            "type": "rule",
+            "color": "#eb6834",
+            "strokeCap": "round"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Origin longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Origin latitude",
+              "type": "quantitative"
+            },
+            "longitude2": {
+              "field": "Longitude"
+            },
+            "latitude2": {
+              "field": "Latitude"
+            },
+            "strokeWidth": {
+              "field": "Exports",
+              "type": "quantitative",
+              "title": "Food exports (million dollars)",
+              "scale": {
+                "range": [
+                  1,
+                  12
+                ],
+                "zero": true
+              },
+              "legend": {
+                "orient": "bottom",
+                "format": ",.0f",
+                "symbolStrokeColor": "#eb6834",
+                "direction": "horizontal",
+                "tickCount": 4,
+                "values": [
+                  1000,
+                  4000,
+                  8000
+                ]
+              }
+            },
+            "opacity": {
+              "condition": {
+                "param": "focus",
+                "value": 0.85
+              },
+              "value": 0.2
+            },
+            "tooltip": [
+              {
+                "field": "Country",
+                "type": "nominal",
+                "title": "Destination"
+              },
+              {
+                "field": "Industry",
+                "type": "nominal",
+                "title": "Food industry"
+              },
+              {
+                "field": "Exports",
+                "type": "quantitative",
+                "title": "Food exports (million dollars)",
+                "format": ",.0f"
+              },
+              {
+                "field": "Rank",
+                "type": "quantitative",
+                "title": "Rank among buyers"
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "circle",
+            "color": "#b8481b",
+            "size": 40,
+            "stroke": "#ffffff",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "tooltip": [
+              {
+                "field": "Country",
+                "type": "nominal",
+                "title": "Destination"
+              },
+              {
+                "field": "Exports",
+                "type": "quantitative",
+                "title": "Food exports (million dollars)",
+                "format": ",.0f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0) && datum['Country'] != 'South Korea'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 7,
+            "dy": -7,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "stroke": "#ffffff",
+            "strokeWidth": 3,
+            "strokeOpacity": 0.8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0)"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -7,
+            "dy": -7,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "stroke": "#ffffff",
+            "strokeWidth": 3,
+            "strokeOpacity": 0.8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && datum['Country'] == 'South Korea'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "dx": 0,
+            "dy": -14,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "stroke": "#ffffff",
+            "strokeWidth": 3,
+            "strokeOpacity": 0.8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0) && datum['Country'] != 'South Korea'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 7,
+            "dy": -7,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0)"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "dx": -7,
+            "dy": -7,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= 6 && datum['Country'] == 'South Korea'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "dx": 0,
+            "dy": -14,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Longitude": 133.8,
+            "Latitude": -25.3
+          }
+        ]
+      },
+      "mark": {
+        "type": "circle",
+        "size": 120,
+        "color": "#23201c",
+        "stroke": "#ffffff",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "x": 8,
+        "y": 8,
+        "align": "left",
+        "baseline": "top",
+        "font": "Archivo, Arial, sans-serif",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "color": "#b8481b",
+        "text": {
+          "expr": "'Showing: ' + industry"
+        }
+      }
+    }
+  ]
+}
