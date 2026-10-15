@@ -1,0 +1,136 @@
+Country,Industry,Exports (million dollars),Rank,Country number,Longitude,Latitude
+United States,All food industries,8343.27,1,840,-97.12,39.73
+China,All food industries,6886.67,2,156,106.42,32.53
+Japan,All food industries,3880.10,3,392,138.97,36.28
+South Korea,All food industries,3403.96,4,410,128.02,36.29
+India,All food industries,1940.29,5,356,78.60,22.53
+New Zealand,All food industries,1741.56,6,554,169.60,-45.04
+Indonesia,All food industries,1296.04,7,360,101.64,-0.24
+Malaysia,All food industries,1126.09,8,458,113.81,2.40
+Singapore,All food industries,1087.44,9,702,103.80,1.35
+Thailand,All food industries,910.95,10,764,101.29,15.51
+United Arab Emirates,All food industries,900.16,11,784,54.64,23.65
+Taiwan,All food industries,891.43,12,158,120.91,23.77
+Vietnam,All food industries,868.80,13,704,105.44,21.53
+Canada,All food industries,741.08,14,124,-104.47,58.55
+Philippines,All food industries,676.95,15,608,121.40,16.95
+New Zealand,Bakery products,187.41,1,554,169.60,-45.04
+United States,Bakery products,17.77,2,840,-97.12,39.73
+United Kingdom,Bakery products,12.56,3,826,-1.41,52.49
+South Korea,Bakery products,10.04,4,410,128.02,36.29
+Singapore,Bakery products,9.43,5,702,103.80,1.35
+Japan,Bakery products,8.94,6,392,138.97,36.28
+New Caledonia,Bakery products,8.02,7,540,165.51,-21.27
+Papua New Guinea,Bakery products,6.58,8,598,143.44,-5.83
+Taiwan,Bakery products,5.48,9,158,120.91,23.77
+Hong Kong,Bakery products,5.36,10,344,114.20,22.30
+China,Bakery products,5.02,11,156,106.42,32.53
+Canada,Bakery products,4.30,12,124,-104.47,58.55
+Saudi Arabia,Bakery products,4.25,13,682,44.68,23.79
+Malaysia,Bakery products,3.23,14,458,113.81,2.40
+Thailand,Bakery products,2.63,15,764,101.29,15.51
+China,Dairy products,886.52,1,156,106.42,32.53
+Japan,Dairy products,534.20,2,392,138.97,36.28
+Indonesia,Dairy products,300.09,3,360,101.64,-0.24
+Malaysia,Dairy products,288.89,4,458,113.81,2.40
+Thailand,Dairy products,216.59,5,764,101.29,15.51
+Singapore,Dairy products,198.70,6,702,103.80,1.35
+Philippines,Dairy products,145.30,7,608,121.40,16.95
+Vietnam,Dairy products,142.41,8,704,105.44,21.53
+New Zealand,Dairy products,137.70,9,554,169.60,-45.04
+South Korea,Dairy products,135.07,10,410,128.02,36.29
+Taiwan,Dairy products,88.15,11,158,120.91,23.77
+Hong Kong,Dairy products,70.41,12,344,114.20,22.30
+Kuwait,Dairy products,57.61,13,414,47.61,29.49
+United Arab Emirates,Dairy products,46.77,14,784,54.64,23.65
+United States,Dairy products,43.41,15,840,-97.12,39.73
+India,Fruit and vegetables,1887.13,1,356,78.60,22.53
+Bangladesh,Fruit and vegetables,611.92,2,50,90.04,24.02
+China,Fruit and vegetables,568.16,3,156,106.42,32.53
+Egypt,Fruit and vegetables,370.49,4,818,29.35,26.18
+Pakistan,Fruit and vegetables,349.48,5,586,70.83,30.21
+Sri Lanka,Fruit and vegetables,158.70,6,144,80.69,7.67
+New Zealand,Fruit and vegetables,156.34,7,554,169.60,-45.04
+United Arab Emirates,Fruit and vegetables,152.88,8,784,54.64,23.65
+Japan,Fruit and vegetables,129.19,9,392,138.97,36.28
+Türkiye,Fruit and vegetables,119.01,10,792,34.76,39.41
+Vietnam,Fruit and vegetables,99.84,11,704,105.44,21.53
+United States,Fruit and vegetables,83.49,12,840,-97.12,39.73
+South Korea,Fruit and vegetables,74.75,13,410,128.02,36.29
+Thailand,Fruit and vegetables,58.48,14,764,101.29,15.51
+Nepal,Fruit and vegetables,43.21,15,524,83.34,28.41
+United States,Grain and cereal products,330.31,1,840,-97.12,39.73
+Vietnam,Grain and cereal products,216.17,2,704,105.44,21.53
+Japan,Grain and cereal products,171.03,3,392,138.97,36.28
+China,Grain and cereal products,170.34,4,156,106.42,32.53
+New Zealand,Grain and cereal products,133.06,5,554,169.60,-45.04
+Philippines,Grain and cereal products,101.71,6,608,121.40,16.95
+Thailand,Grain and cereal products,90.24,7,764,101.29,15.51
+Indonesia,Grain and cereal products,73.51,8,360,101.64,-0.24
+South Korea,Grain and cereal products,61.85,9,410,128.02,36.29
+Malaysia,Grain and cereal products,52.67,10,458,113.81,2.40
+Cambodia,Grain and cereal products,37.50,11,116,104.40,12.61
+Taiwan,Grain and cereal products,36.27,12,158,120.91,23.77
+United Arab Emirates,Grain and cereal products,25.41,13,784,54.64,23.65
+Papua New Guinea,Grain and cereal products,22.93,14,598,143.44,-5.83
+Singapore,Grain and cereal products,21.39,15,702,103.80,1.35
+United States,Meat products,7567.44,1,840,-97.12,39.73
+China,Meat products,4054.20,2,156,106.42,32.53
+South Korea,Meat products,2758.20,3,410,128.02,36.29
+Japan,Meat products,2643.22,4,392,138.97,36.28
+Indonesia,Meat products,809.54,5,360,101.64,-0.24
+Singapore,Meat products,699.94,6,702,103.80,1.35
+Canada,Meat products,678.55,7,124,-104.47,58.55
+United Arab Emirates,Meat products,637.75,8,784,54.64,23.65
+Taiwan,Meat products,563.94,9,158,120.91,23.77
+Malaysia,Meat products,545.81,10,458,113.81,2.40
+Saudi Arabia,Meat products,521.89,11,682,44.68,23.79
+Thailand,Meat products,418.61,12,764,101.29,15.51
+United Kingdom,Meat products,386.58,13,826,-1.41,52.49
+Vietnam,Meat products,317.14,14,704,105.44,21.53
+Philippines,Meat products,315.00,15,608,121.40,16.95
+China,Other food products,804.03,1,156,106.42,32.53
+New Zealand,Other food products,654.03,2,554,169.60,-45.04
+Japan,Other food products,329.62,3,392,138.97,36.28
+South Korea,Other food products,321.11,4,410,128.02,36.29
+United States,Other food products,250.07,5,840,-97.12,39.73
+Malaysia,Other food products,158.23,6,458,113.81,2.40
+Taiwan,Other food products,119.47,7,158,120.91,23.77
+Thailand,Other food products,103.43,8,764,101.29,15.51
+Netherlands,Other food products,85.44,9,528,5.38,52.42
+Singapore,Other food products,77.46,10,702,103.80,1.35
+Vietnam,Other food products,74.70,11,704,105.44,21.53
+Papua New Guinea,Other food products,67.36,12,598,143.44,-5.83
+Indonesia,Other food products,59.38,13,360,101.64,-0.24
+Hong Kong,Other food products,56.76,14,344,114.20,22.30
+Philippines,Other food products,56.42,15,608,121.40,16.95
+China,Seafood,386.47,1,156,106.42,32.53
+Hong Kong,Seafood,203.43,2,344,114.20,22.30
+Singapore,Seafood,39.88,3,702,103.80,1.35
+Taiwan,Seafood,38.63,4,158,120.91,23.77
+United States,Seafood,28.73,5,840,-97.12,39.73
+New Zealand,Seafood,20.30,6,554,169.60,-45.04
+Japan,Seafood,19.00,7,392,138.97,36.28
+Vietnam,Seafood,16.18,8,704,105.44,21.53
+Thailand,Seafood,9.91,9,764,101.29,15.51
+Malaysia,Seafood,8.97,10,458,113.81,2.40
+United Arab Emirates,Seafood,3.80,11,784,54.64,23.65
+South Korea,Seafood,2.24,12,410,128.02,36.29
+Netherlands,Seafood,2.03,13,528,5.38,52.42
+Italy,Seafood,1.88,14,380,12.62,42.74
+United Kingdom,Seafood,1.62,15,826,-1.41,52.49
+New Zealand,Sugar and confectionery,282.38,1,554,169.60,-45.04
+Japan,Sugar and confectionery,44.91,2,392,138.97,36.28
+South Korea,Sugar and confectionery,40.70,3,410,128.02,36.29
+Malaysia,Sugar and confectionery,39.64,4,458,113.81,2.40
+Philippines,Sugar and confectionery,31.22,5,608,121.40,16.95
+United States,Sugar and confectionery,22.05,6,840,-97.12,39.73
+United Kingdom,Sugar and confectionery,14.71,7,826,-1.41,52.49
+Indonesia,Sugar and confectionery,13.80,8,360,101.64,-0.24
+China,Sugar and confectionery,11.92,9,156,106.42,32.53
+Thailand,Sugar and confectionery,11.08,10,764,101.29,15.51
+Singapore,Sugar and confectionery,10.85,11,702,103.80,1.35
+Taiwan,Sugar and confectionery,10.56,12,158,120.91,23.77
+Hong Kong,Sugar and confectionery,10.40,13,344,114.20,22.30
+Fiji,Sugar and confectionery,7.63,14,242,177.95,-17.87
+Papua New Guinea,Sugar and confectionery,5.70,15,598,143.44,-5.83
