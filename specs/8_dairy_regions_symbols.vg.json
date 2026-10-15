@@ -1,0 +1,197 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional symbol map. Each circle is one of Australia's eight dairy regions, sized by the milk it produced in 2024-25. Circle area, not radius, is proportional to milk volume.",
+  "width": "container",
+  "height": 430,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/geo/au_states.topo.json",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#ece7de",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/clean/dairy_regions.csv"
+      },
+      "transform": [
+        {
+          "calculate": "toNumber(datum['Milk produced (million litres)'])",
+          "as": "Milk"
+        },
+        {
+          "calculate": "toNumber(datum['Longitude'])",
+          "as": "Longitude"
+        },
+        {
+          "calculate": "toNumber(datum['Latitude'])",
+          "as": "Latitude"
+        }
+      ],
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "color": "#1baf7a",
+            "opacity": 0.7,
+            "stroke": "#ffffff",
+            "strokeWidth": 2
+          },
+          "encoding": {
+            "size": {
+              "field": "Milk",
+              "type": "quantitative",
+              "title": "Milk produced (million litres)",
+              "scale": {
+                "type": "sqrt",
+                "range": [
+                  0,
+                  1700
+                ],
+                "zero": true
+              },
+              "legend": {
+                "orient": "bottom-left",
+                "direction": "horizontal",
+                "symbolFillColor": "#1baf7a",
+                "symbolStrokeColor": "#ffffff",
+                "format": ",.0f",
+                "values": [
+                  400,
+                  1000,
+                  1900
+                ]
+              }
+            },
+            "tooltip": [
+              {
+                "field": "Region (full name)",
+                "type": "nominal",
+                "title": "Dairy region"
+              },
+              {
+                "field": "Milk",
+                "type": "quantitative",
+                "title": "Milk produced in 2024–25 (million litres)",
+                "format": ",.0f"
+              },
+              {
+                "field": "Share of national milk (per cent)",
+                "type": "quantitative",
+                "title": "Share of all Australian milk (per cent)",
+                "format": ".0f"
+              },
+              {
+                "field": "Dairy farms",
+                "type": "quantitative",
+                "title": "Dairy farms in 2025",
+                "format": ","
+              },
+              {
+                "field": "Dairy farms 2021",
+                "type": "quantitative",
+                "title": "Dairy farms in 2021",
+                "format": ","
+              },
+              {
+                "field": "Change in milk since 2021 (per cent)",
+                "type": "quantitative",
+                "title": "Change in milk since 2021 (per cent)",
+                "format": "+.0f"
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Label longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Label latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Region"
+            }
+          },
+          "transform": [
+            {
+              "filter": "datum['Label side'] == 'right'"
+            }
+          ]
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Label longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Label latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Region"
+            }
+          },
+          "transform": [
+            {
+              "filter": "datum['Label side'] == 'left'"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "view": {
+    "fill": "#e3ecf2",
+    "stroke": null,
+    "cornerRadius": 6
+  }
+}
