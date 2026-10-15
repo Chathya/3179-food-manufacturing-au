@@ -1,0 +1,53 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Small multiples. Annual production of the four main dairy products. Each panel has its own vertical scale so the shape of each trend can be compared.",
+  "data": {"url": "data/clean/dairy_products.csv"},
+  "transform": [
+    {"calculate": "toNumber(datum['Production (thousand tonnes)'])", "as": "Production"},
+    {"calculate": "toNumber(datum['Year ending June'])", "as": "Year ending June"}
+  ],
+  "facet": {
+    "field": "Product", "type": "nominal", "title": null,
+    "sort": ["Cheese", "Butter", "Skim milk powder", "Whole milk powder"],
+    "header": {"labelAnchor": "start", "labelPadding": 4}
+  },
+  "columns": 2,
+  "spec": {
+    "width": 280,
+    "height": 130,
+    "layer": [
+      {
+        "mark": {"type": "area", "color": "#1baf7a", "opacity": 0.12, "interpolate": "monotone"},
+        "encoding": {
+          "x": {"field": "Year ending June", "type": "quantitative"},
+          "y": {"field": "Production", "type": "quantitative"}
+        }
+      },
+      {
+        "mark": {"type": "line", "color": "#13875e", "strokeWidth": 2, "interpolate": "monotone"},
+        "encoding": {
+          "x": {"field": "Year ending June", "type": "quantitative", "title": null, "axis": {"format": "d", "tickCount": 4, "grid": false}},
+          "y": {"field": "Production", "type": "quantitative", "title": null, "axis": {"tickCount": 3}},
+          "tooltip": [
+            {"field": "Product", "type": "nominal", "title": "Product"},
+            {"field": "Year", "type": "nominal", "title": "Financial year"},
+            {"field": "Production", "type": "quantitative", "title": "Production (thousand tonnes)", "format": ",.0f"}
+          ]
+        }
+      },
+      {
+        "mark": {"type": "point", "opacity": 0, "size": 120},
+        "encoding": {
+          "x": {"field": "Year ending June", "type": "quantitative"},
+          "y": {"field": "Production", "type": "quantitative"},
+          "tooltip": [
+            {"field": "Product", "type": "nominal", "title": "Product"},
+            {"field": "Year", "type": "nominal", "title": "Financial year"},
+            {"field": "Production", "type": "quantitative", "title": "Production (thousand tonnes)", "format": ",.0f"}
+          ]
+        }
+      }
+    ]
+  },
+  "resolve": {"scale": {"y": "independent"}}
+}
