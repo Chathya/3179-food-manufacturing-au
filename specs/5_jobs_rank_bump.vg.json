@@ -1,0 +1,207 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Bump chart. Rank of each food industry by number of workers, each year. Hovering a line brings it into focus and fades the rest into context.",
+  "data": {
+    "url": "data/clean/food_jobs_by_industry.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Rank'])",
+      "as": "Rank"
+    },
+    {
+      "calculate": "toNumber(datum['Year'])",
+      "as": "Year"
+    },
+    {
+      "calculate": "toNumber(datum['Workers (thousands)'])",
+      "as": "Workers"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Year",
+          "as": "Last year"
+        }
+      ]
+    }
+  ],
+  "width": "container",
+  "height": 300,
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "quantitative",
+      "title": null,
+      "scale": {
+        "nice": false
+      },
+      "axis": {
+        "format": "d",
+        "tickMinStep": 1,
+        "grid": false,
+        "values": [
+          2006,
+          2010,
+          2015,
+          2020,
+          2025
+        ]
+      }
+    },
+    "y": {
+      "field": "Rank",
+      "type": "quantitative",
+      "title": "Rank (1 is the most workers)",
+      "scale": {
+        "reverse": true,
+        "domain": [
+          0.6,
+          8.4
+        ],
+        "nice": false
+      },
+      "axis": {
+        "values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "grid": false
+      }
+    },
+    "color": {
+      "field": "Industry",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "domain": [
+          "Seafood",
+          "Bakery products",
+          "Dairy products",
+          "Grain and cereal products",
+          "Sugar and confectionery",
+          "Fruit and vegetables",
+          "Other food products",
+          "Meat products"
+        ],
+        "range": [
+          "#2a78d6",
+          "#eb6834",
+          "#1baf7a",
+          "#eda100",
+          "#e87ba4",
+          "#008300",
+          "#6250d6",
+          "#e34948"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": {
+        "param": "pick",
+        "value": 1
+      },
+      "value": 0.15
+    }
+  },
+  "layer": [
+    {
+      "params": [
+        {
+          "name": "pick",
+          "select": {
+            "type": "point",
+            "fields": [
+              "Industry"
+            ],
+            "on": "pointerover",
+            "clear": "pointerout"
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone",
+        "strokeCap": "round"
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 45
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Food industry"
+          },
+          {
+            "field": "Year",
+            "type": "quantitative",
+            "title": "Year",
+            "format": "d"
+          },
+          {
+            "field": "Rank",
+            "type": "quantitative",
+            "title": "Rank"
+          },
+          {
+            "field": "Workers",
+            "type": "quantitative",
+            "title": "Workers (thousands)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Year'] == datum['Last year']"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 12,
+        "color": "#23201c"
+      },
+      "encoding": {
+        "text": {
+          "field": "Industry"
+        },
+        "color": {
+          "value": "#23201c"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "bottom": 5,
+    "right": 175
+  }
+}
