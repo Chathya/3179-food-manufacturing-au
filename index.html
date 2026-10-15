@@ -3,77 +3,388 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>From Farm Gate to Shelf: Australia's Food Manufacturing</title>
+  <title>From Farm Gate to Supermarket Shelf</title>
+  <meta name="description" content="How Australia's food manufacturing industry has changed since 2006: what it makes, where it happens, where it goes and what we buy.">
+  <meta name="author" content="Chathya Attanayake">
 
-  <!-- Fonts (swap for a typeface that suits the topic) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Pure.css grid -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Vega / Vega-Lite / Vega-Embed -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
 </head>
 <body>
-  <header class="hero">
-    <h1>From Farm Gate to Shelf</h1>
-    <p class="subtitle">How Australia's food manufacturing sector has changed since 2006</p>
-  </header>
 
-  <main class="container">
+<!-- ================================================================ HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="hero-kicker">Australian food manufacturing · 2006 to 2025</p>
+    <h1 class="hero-title">
+      <span class="hero-title-small">From Farm Gate</span>
+      <span class="hero-title-big">to Supermarket Shelf</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-subtitle">How Australia's food factories grew, where they work and who buys.</p>
+    <p class="lines hero-intro">
+      <span>Almost everything in your trolley passed through a factory.</span>
+      <span>Food factories are now Australia's biggest manufacturing industry.</span>
+      <span>This story follows what they make and where.</span>
+      <span>It ends with where the food goes and what we buy.</span>
+    </p>
 
-    <!-- Section 1: The big picture -->
-    <section>
-      <h2>1. Australia's biggest manufacturing industry</h2>
-      <p class="lead">Intro text goes here.</p>
-      <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-2-3"><div id="chart_sector_trend" class="chart"></div></div>
-        <div class="pure-u-1 pure-u-md-1-3"><p class="annotation">Side note / key takeaway.</p></div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-number" id="stat-jobs">231,491</span>
+        <span class="hero-stat-label">people worked in food factories in June 2025</span>
       </div>
-    </section>
+      <div class="hero-stat">
+        <span class="hero-stat-number" id="stat-share">22%</span>
+        <span class="hero-stat-label">of all factory value added came from food in 2024–25</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number" id="stat-exports">$41.6 billion</span>
+        <span class="hero-stat-label">of manufactured food was sold overseas in 2024–25</span>
+      </div>
+    </div>
 
-    <!-- Section 2: Categories -->
-    <section>
-      <h2>2. What we make</h2>
-      <div id="chart_category_heatmap" class="chart"></div>
-    </section>
+    <a class="hero-link" href="#section-1">Explore the story <span aria-hidden="true">↓</span></a>
+  </div>
+</header>
 
-    <!-- Section 3: Where (maps) -->
-    <section>
-      <h2>3. Where it happens</h2>
-      <div id="map_states" class="chart"></div>
-    </section>
+<main>
 
-    <!-- Section 4: Where it goes -->
-    <section>
-      <h2>4. Where it goes</h2>
-      <div id="map_exports" class="chart"></div>
-    </section>
+<!-- ================================================================ 01 -->
+<section class="story" id="section-1">
+  <div class="wrap">
+    <div class="story-head reveal">
+      <p class="story-number">01 / Food pulls ahead</p>
+      <h2>Food Pulls Ahead</h2>
+      <p class="lines story-intro">
+        <span>Car plants closed and steel mills cut back.</span>
+        <span>Food factories kept growing almost every year.</span>
+        <span>Today they add more value than any other factory type.</span>
+      </p>
+    </div>
 
-    <!-- Section 5: What we buy -->
-    <section>
-      <h2>5. What Australians buy</h2>
-      <div id="chart_consumption" class="chart"></div>
-    </section>
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Value added by food and other factories</h3>
+        <p class="chart-sub">Index, 2006–07 equals 100. Dollars are not adjusted for price rises.</p>
+        <p class="hint">Drag across the small chart underneath to zoom into any years.</p>
+        <div id="chart-trend" class="chart"></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Australian Industry 2024–25.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong><span class="kw-food">Food factories</span> more than doubled.</strong></span>
+          <span>Their value added rose <strong>111%</strong> since 2006–07.</span>
+          <span><span class="kw-other">All other factories</span> grew just <strong>27%</strong>.</span>
+        </p>
+      </aside>
+    </div>
 
-  </main>
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Each industry's share of factory value</h3>
+        <p class="chart-sub">Per cent of all manufacturing value added, 2006–07 and 2024–25</p>
+        <div id="chart-slope" class="chart"></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Australian Industry 2024–25.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Food is now the largest slice.</strong></span>
+          <span>Its share rose from <strong>15%</strong> to <strong>22%</strong>.</span>
+          <span>Metals fell from <strong>14%</strong> to <strong>7%</strong>.</span>
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
 
-  <footer class="container meta">
-    <h3>Data sources</h3>
-    <ul>
-      <li>Australian Bureau of Statistics, <em>Australian Industry, 2024-25</em>.</li>
-      <li>Australian Bureau of Statistics, <em>Labour Force, Australia, Detailed</em> (EQ06).</li>
-      <!-- add the rest -->
+<!-- ================================================================ 02 -->
+<section class="story story-alt" id="section-2">
+  <div class="wrap">
+    <div class="story-head reveal">
+      <p class="story-number">02 / Inside the factory gates</p>
+      <h2>What Our Food Factories Make</h2>
+      <p class="lines story-intro">
+        <span>Food manufacturing is really eight industries.</span>
+        <span>They differ in size, workers and direction.</span>
+        <span>Each keeps the same colour from here on.</span>
+      </p>
+    </div>
+
+    <ul class="industry-icons reveal" aria-label="The eight food industries used on this page">
+      <li><span class="icon" aria-hidden="true">🥩</span><span class="icon-name" style="--c:#e34948">Meat products</span><span class="icon-desc">Abattoirs, sausages, bacon</span></li>
+      <li><span class="icon" aria-hidden="true">🍞</span><span class="icon-name" style="--c:#eb6834">Bakery products</span><span class="icon-desc">Bread, cakes, biscuits</span></li>
+      <li><span class="icon" aria-hidden="true">🧀</span><span class="icon-name" style="--c:#1baf7a">Dairy products</span><span class="icon-desc">Milk, cheese, butter, powder</span></li>
+      <li><span class="icon" aria-hidden="true">🍬</span><span class="icon-name" style="--c:#e87ba4">Sugar and confectionery</span><span class="icon-desc">Sugar, chocolate, lollies</span></li>
+      <li><span class="icon" aria-hidden="true">🍎</span><span class="icon-name" style="--c:#008300">Fruit and vegetables</span><span class="icon-desc">Canned, frozen, juiced</span></li>
+      <li><span class="icon" aria-hidden="true">🌾</span><span class="icon-name" style="--c:#eda100">Grain and cereal products</span><span class="icon-desc">Flour, rice, cereal</span></li>
+      <li><span class="icon" aria-hidden="true">🐟</span><span class="icon-name" style="--c:#2a78d6">Seafood</span><span class="icon-desc">Fish and prawn processing</span></li>
+      <li><span class="icon" aria-hidden="true">🥫</span><span class="icon-name" style="--c:#6250d6">Other food products</span><span class="icon-desc">Oils, sauces, ready meals</span></li>
     </ul>
-    <p>Author: Chathya Attanayake · Created: October 2026 · FIT3179 Data Visualisation 2</p>
-    <p>AI use: <!-- acknowledge any AI tools used --></p>
-  </footer>
 
-  <script src="js/main.js"></script>
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Who adds the value in food manufacturing</h3>
+        <p class="chart-sub">Each square is one per cent of food value added, 2024–25</p>
+        <p class="hint">Click an industry in the legend to highlight its squares.</p>
+        <div id="chart-waffle" class="chart"></div>
+        <button class="toggle" type="button" data-target="table-waffle" aria-expanded="false">Show the numbers</button>
+        <div id="table-waffle" class="data-table" hidden></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Australian Industry 2024–25, manufacturing industry tables.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Meat adds a third of the value.</strong></span>
+          <span>It makes <strong>35%</strong> of food value added.</span>
+          <span>Bakeries come third with <strong>15%</strong>.</span>
+        </p>
+      </aside>
+    </div>
+
+    <figure class="chart-block chart-wide reveal">
+      <h3 class="chart-title">Change in workers since 2006</h3>
+      <p class="chart-sub">Per cent change from the 2006 average, each year to 2025. <span class="kw-more">Blue</span> means more workers, <span class="kw-less">orange</span> means fewer.</p>
+      <div id="chart-heatmap" class="chart"></div>
+      <figcaption class="source">Source: Australian Bureau of Statistics, Labour Force, Australia, Detailed (table EQ06), yearly averages of four quarters.</figcaption>
+    </figure>
+    <aside class="finding finding-wide reveal">
+      <p class="finding-label">Key finding</p>
+      <p class="lines finding-text">
+        <span><strong>Dairy and other food products grew the most.</strong></span>
+        <span>Dairy workers rose <strong>45%</strong> and other food products <strong>73%</strong>.</span>
+        <span>Fruit, vegetable and seafood jobs almost halved.</span>
+      </p>
+    </aside>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Food industries ranked by number of workers</h3>
+        <p class="chart-sub">Rank each year, 2006 to 2025</p>
+        <p class="hint">Hover over a line to bring one industry forward.</p>
+        <div id="chart-bump" class="chart"></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Labour Force, Australia, Detailed (table EQ06).</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Bakeries employ the most people.</strong></span>
+          <span>They ranked first every year but one.</span>
+          <span>Meat briefly took the lead in <strong>2020</strong>.</span>
+        </p>
+      </aside>
+    </div>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Dairy products made in Australia</h3>
+        <p class="chart-sub">Thousand tonnes per financial year, 1975 to 2025. Each panel has its own scale.</p>
+        <div id="chart-dairy" class="chart"></div>
+        <figcaption class="source">Source: ABARES, Agricultural Commodity Statistics 2024–25, dairy tables.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Cheese is near a record high.</strong></span>
+          <span>Factories made <strong>431 thousand tonnes</strong> in 2024–25.</span>
+          <span>Butter and whole milk powder fell sharply.</span>
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 03 -->
+<section class="story" id="section-3">
+  <div class="wrap">
+    <div class="story-head reveal">
+      <p class="story-number">03 / Close to the farm</p>
+      <h2>Where Food Is Made</h2>
+      <p class="lines story-intro">
+        <span>Food factories sit close to the farms they rely on.</span>
+        <span>That puts many of them in country towns.</span>
+        <span>Some states depend on them far more than others.</span>
+      </p>
+    </div>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Food jobs as a share of each state's factory jobs</h3>
+        <p class="chart-sub">Yearly average of four quarterly surveys</p>
+        <p class="hint">Pick a food industry from the menu and a year on the slider.</p>
+        <div id="map-states" class="chart"></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Labour Force, Australia, Detailed (table EQ06).</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Tasmania relies on food the most.</strong></span>
+          <span><strong>32%</strong> of its factory workers make food.</span>
+          <span>Across Australia the figure is about <strong>20%</strong>.</span>
+        </p>
+      </aside>
+    </div>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Milk produced in each dairy region</h3>
+        <p class="chart-sub">Million litres of milk, 2025. Circle area shows volume.</p>
+        <p class="hint">Hover over a circle to see how many dairy farms are left.</p>
+        <div id="map-dairy" class="chart"></div>
+        <figcaption class="source">Source: Dairy Australia, Farm Business Production by Region 2025.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Victoria makes two thirds of our milk.</strong></span>
+          <span>Its three regions produced <strong>67%</strong> in 2025.</span>
+          <span>Dairy farm numbers fell <strong>17%</strong> since 2021.</span>
+        </p>
+      </aside>
+    </div>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Grapes crushed in each wine region</h3>
+        <p class="chart-sub">Tonnes reported, 2026 vintage, south-eastern Australia</p>
+        <div id="map-wine" class="chart"></div>
+        <figcaption class="source">Source: Wine Australia, National Vintage Report 2026, table 5.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Three inland river regions dominate.</strong></span>
+          <span>They crushed <strong>71%</strong> of reported tonnes.</span>
+          <span>Western Australia, outside this map, crushed only <strong>2%</strong>.</span>
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ 04 -->
+<section class="story story-alt" id="section-4">
+  <div class="wrap">
+    <div class="story-head reveal">
+      <p class="story-number">04 / Beyond our shores</p>
+      <h2>Where Our Food Goes</h2>
+      <p class="lines story-intro">
+        <span>Food exports grew by three quarters in nine years.</span>
+        <span>They reached <strong>$41.6 billion</strong> in 2024–25.</span>
+        <span>Most of it heads north into Asia.</span>
+      </p>
+    </div>
+
+    <figure class="chart-block chart-wide reveal">
+      <h3 class="chart-title">Manufactured food sent overseas, 2024–25</h3>
+      <p class="chart-sub">Million dollars, top fifteen buyers. Thicker lines carry more food by value.</p>
+      <p class="hint">Pick a food industry from the menu. Hover over a line for its value.</p>
+      <div id="map-exports" class="chart"></div>
+      <figcaption class="source">Source: Queensland Government Statistician's Office, overseas exports by industry and country of destination. 2024–25 is the latest complete year.</figcaption>
+    </figure>
+    <aside class="finding finding-wide reveal">
+      <p class="finding-label">Key finding</p>
+      <p class="lines finding-text">
+        <span><strong>The United States buys the most.</strong></span>
+        <span>It bought <strong>$8.3 billion</strong>, nine tenths of it meat.</span>
+        <span>China and Japan come second and third.</span>
+      </p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================================================================ 05 -->
+<section class="story" id="section-5">
+  <div class="wrap">
+    <div class="story-head reveal">
+      <p class="story-number">05 / In the trolley</p>
+      <h2>What Ends Up in Our Trolley</h2>
+      <p class="lines story-intro">
+        <span>Factories follow what shoppers buy.</span>
+        <span>Here is how our buying changed in five years.</span>
+      </p>
+    </div>
+
+    <div class="split">
+      <figure class="chart-block reveal">
+        <h3 class="chart-title">Food bought per person each day</h3>
+        <p class="chart-sub">Grams. The hollow dot is 2018–19 and the filled dot is 2023–24.</p>
+        <div id="chart-consumption" class="chart"></div>
+        <figcaption class="source">Source: Australian Bureau of Statistics, Apparent Consumption of Selected Foodstuffs, Australia, 2023–24.</figcaption>
+      </figure>
+      <aside class="finding reveal reveal-delay">
+        <p class="finding-label">Key finding</p>
+        <p class="lines finding-text">
+          <span><strong>Plant-based foods grew the fastest.</strong></span>
+          <span>We <span class="kw-more">bought <strong>31%</strong> more</span> per person.</span>
+          <span>We <span class="kw-less">bought less</span> sugar, fruit and fats.</span>
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ CONCLUSION -->
+<section class="closing">
+  <div class="wrap">
+    <p class="story-number">In short</p>
+    <h2>A Quiet Giant</h2>
+    <div class="hero-rule"></div>
+    <p class="lines closing-text">
+      <span>Food is now Australia's largest manufacturing industry.</span>
+      <span>Its value has doubled since 2006–07.</span>
+      <span>It keeps country towns working, from Gippsland to the Riverland.</span>
+      <span>And it feeds shoppers here and across the world.</span>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ================================================================ FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <p class="footer-title">From Farm Gate to Supermarket Shelf</p>
+    <p class="footer-meta">Chathya Attanayake <span>|</span> FIT3179 Data Visualisation 2 <span>|</span> October 2026</p>
+    <div class="footer-rule"></div>
+
+    <div class="footer-grid">
+      <div>
+        <p class="footer-label">Data sources</p>
+        <ul class="footer-sources">
+          <li><a href="https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release" target="_blank" rel="noopener">Australian Bureau of Statistics, Australian Industry 2024–25</a><span>Manufacturing value added and workers by industry.</span></li>
+          <li><a href="https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia-detailed/latest-release" target="_blank" rel="noopener">Australian Bureau of Statistics, Labour Force, Australia, Detailed (table EQ06)</a><span>Workers by food industry and state, 2006 to 2025.</span></li>
+          <li><a href="https://www.abs.gov.au/statistics/health/health-conditions-and-risks/apparent-consumption-selected-foodstuffs-australia/latest-release" target="_blank" rel="noopener">Australian Bureau of Statistics, Apparent Consumption of Selected Foodstuffs 2023–24</a><span>Food bought per person per day.</span></li>
+          <li><a href="https://www.agriculture.gov.au/abares/research-topics/agricultural-commodities/agricultural-commodities-trade-data" target="_blank" rel="noopener">ABARES, Agricultural Commodity Statistics 2024–25</a><span>Dairy products made each year.</span></li>
+          <li><a href="https://www.qgso.qld.gov.au/statistics/theme/economy/international-trade/exports" target="_blank" rel="noopener">Queensland Government Statistician's Office, exports by industry and country</a><span>Food exports by destination, based on Australian Bureau of Statistics trade data.</span></li>
+          <li><a href="https://www.dairyaustralia.com.au" target="_blank" rel="noopener">Dairy Australia, Farm Business Production by Region 2025</a><span>Milk and dairy farms by region.</span></li>
+          <li><a href="https://www.wineaustralia.com/market-insights/national-vintage-report" target="_blank" rel="noopener">Wine Australia, National Vintage Report 2026</a><span>Grapes crushed by wine region.</span></li>
+          <li><a href="https://github.com/rowanhogan/australian-states" target="_blank" rel="noopener">Australian state boundaries (Australian Bureau of Statistics, via Rowan Hogan)</a><span>State shapes. World shapes from Natural Earth via Vega datasets.</span></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-label">Notes on the data</p>
+        <p class="footer-text">Food industries follow the Australian and New Zealand Standard Industrial Classification. Oil and fat manufacturing is grouped with other food products. Dollar values are not adjusted for inflation. Small states such as the Northern Territory have larger survey errors. Dairy and wine region positions are approximate region centres. Export figures for 2025–26 are preliminary and are not shown.</p>
+
+        <p class="footer-label">Use of artificial intelligence</p>
+        <p class="footer-text">Claude (Anthropic) was used to help clean the data, draft chart code and styling, and check grammar. All design choices and final text were reviewed by the author.</p>
+
+        <p class="footer-label">Chart files</p>
+        <p class="footer-text">Every chart is built with Vega-Lite. The chart descriptions are in the <code>specs</code> folder of this page's GitHub repository.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
 </body>
 </html>
