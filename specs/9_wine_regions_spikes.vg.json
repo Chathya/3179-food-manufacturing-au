@@ -112,7 +112,7 @@
         {
           "mark": {
             "type": "rule",
-            "color": "#6250d6",
+            "color": "#7b2440",
             "strokeWidth": 4,
             "strokeCap": "round",
             "opacity": 0.85
@@ -155,7 +155,7 @@
         {
           "mark": {
             "type": "circle",
-            "color": "#6250d6",
+            "color": "#7b2440",
             "size": 30
           },
           "encoding": {
@@ -201,6 +201,38 @@
     {
       "data": {
         "values": [
+          {
+            "Longitude": 151.6,
+            "Latitude": -38.6,
+            "Text": "Three inland river regions|crushed 71% of all grapes"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "lineBreak": "|",
+        "fontSize": 12.5,
+        "fontWeight": "bold",
+        "color": "#7b2440",
+        "align": "center"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Text"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
           {}
         ]
       },
@@ -222,8 +254,6 @@
     }
   ],
   "view": {
-    "fill": "#e3ecf2",
-    "stroke": null,
-    "cornerRadius": 6
+    "stroke": null
   }
 }

@@ -129,11 +129,11 @@
               "expr": "industry == 'All food industries' ? [0, 40] : industry == 'Bakery products' ? [0, 30] : industry == 'Dairy products' ? [0, 10] : industry == 'Fruit and vegetables' ? [0, 10] : industry == 'Grain and cereal products' ? [0, 10] : industry == 'Meat products' ? [0, 15] : industry == 'Other food products' ? [0, 10] : industry == 'Seafood' ? [0, 5] : industry == 'Sugar and confectionery' ? [0, 5] : [0, 50]"
             },
             "range": [
-              "#cde2fb",
-              "#86b6ef",
-              "#3987e5",
-              "#1c5cab",
-              "#0d366b"
+              "#f3e3cf",
+              "#ddb98f",
+              "#b9875a",
+              "#8a5634",
+              "#4a2c1d"
             ],
             "nice": false
           },
@@ -240,29 +240,117 @@
     },
     {
       "data": {
-        "values": [
-          {}
-        ]
+        "url": "data/clean/food_jobs_by_state.csv"
       },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == industry && toNumber(datum['Year']) == year && datum['State'] != 'Australian Capital Territory'"
+        },
+        {
+          "calculate": "toNumber(datum['Share of state factory jobs (per cent)'])",
+          "as": "Share"
+        },
+        {
+          "lookup": "State",
+          "from": {
+            "data": {
+              "url": "data/geo/state_labels.csv"
+            },
+            "key": "State",
+            "fields": [
+              "Longitude",
+              "Latitude"
+            ]
+          }
+        },
+        {
+          "calculate": "format(datum['Share'], '.0f') + '%'",
+          "as": "Value"
+        }
+      ],
       "mark": {
         "type": "text",
-        "x": 12,
-        "y": 10,
-        "align": "left",
-        "baseline": "top",
-        "font": "Archivo, Arial, sans-serif",
-        "fontSize": 18,
-        "fontWeight": 700,
-        "color": "#b8481b",
+        "dy": 15,
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#2b211b",
+        "stroke": "#ffffff",
+        "strokeWidth": 3,
+        "strokeOpacity": 0.75
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
         "text": {
-          "expr": "'Showing: ' + industry + ', ' + year"
+          "field": "Value"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/clean/food_jobs_by_state.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == industry && toNumber(datum['Year']) == year && datum['State'] != 'Australian Capital Territory'"
+        },
+        {
+          "calculate": "toNumber(datum['Share of state factory jobs (per cent)'])",
+          "as": "Share"
+        },
+        {
+          "lookup": "State",
+          "from": {
+            "data": {
+              "url": "data/geo/state_labels.csv"
+            },
+            "key": "State",
+            "fields": [
+              "Longitude",
+              "Latitude"
+            ]
+          }
+        },
+        {
+          "calculate": "format(datum['Share'], '.0f') + '%'",
+          "as": "Value"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "dy": 15,
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#2b211b"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Value"
         }
       }
     }
   ],
   "view": {
-    "fill": "#e3ecf2",
-    "stroke": null,
-    "cornerRadius": 6
+    "stroke": null
+  },
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "right": 5,
+    "bottom": 18
   }
 }

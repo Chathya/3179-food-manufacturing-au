@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Proportional symbol map. Each circle is one of Australia's eight dairy regions, sized by the milk it produced in 2024-25. Circle area, not radius, is proportional to milk volume.",
+  "description": "Proportional symbol map. Each circle is one of Australia's eight dairy regions, sized by the milk it produced in 2024 to 2025. Circle area, not radius, is proportional to milk volume.",
   "width": "container",
   "height": 430,
   "projection": {
@@ -102,7 +102,7 @@
               {
                 "field": "Milk",
                 "type": "quantitative",
-                "title": "Milk produced in 2024–25 (million litres)",
+                "title": "Milk produced in the year to June 2025 (million litres)",
                 "format": ",.0f"
               },
               {
@@ -187,11 +187,41 @@
           ]
         }
       ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Longitude": 128.6,
+            "Latitude": -36.4,
+            "Text": "Victoria's three regions|make 67% of all milk"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "lineBreak": "|",
+        "fontSize": 12.5,
+        "fontWeight": "bold",
+        "color": "#13875e",
+        "align": "center"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Text"
+        }
+      }
     }
   ],
   "view": {
-    "fill": "#e3ecf2",
-    "stroke": null,
-    "cornerRadius": 6
+    "stroke": null
   }
 }
