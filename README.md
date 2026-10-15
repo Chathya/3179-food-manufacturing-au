@@ -8,7 +8,7 @@ Live page: https://<your-github-username>.github.io/food-manufacturing-au/
 
 | # | Spec file | Idiom | Data |
 |---|---|---|---|
-| 1 | `1_trend_overview_detail.vg.json` | Line chart with overview and detail (zoom) | ABS Australian Industry |
+| 1 | `1_trend_overview_detail.vg.json` | Line chart with period zoom buttons | ABS Australian Industry |
 | 2 | `2_share_slope.vg.json` | Slope chart | ABS Australian Industry |
 | 3 | `3_category_waffle.vg.json` | Waffle chart | ABS Australian Industry cube |
 | 4 | `4_jobs_heatmap.vg.json` | Heatmap | ABS Labour Force EQ06 |
