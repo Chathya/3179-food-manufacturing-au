@@ -1,0 +1,175 @@
+id,country,lon,lat
+4,Afghanistan,66.586,34.154
+24,Angola,17.927,-12.098
+8,Albania,20.016,40.733
+784,United Arab Emirates,54.644,23.653
+32,Argentina,-64.175,-33.497
+51,Armenia,44.734,40.556
+10,Antarctica,48.43,-75.958
+260,French Southern Territories,69.531,-49.329
+36,Australia,132.384,-22.986
+40,Austria,14.075,47.576
+31,Azerbaijan,47.188,40.291
+108,Burundi,29.927,-3.404
+56,Belgium,4.582,50.669
+204,Benin,2.441,10.375
+854,Burkina Faso,-1.4,12.741
+50,Bangladesh,90.041,24.017
+100,Bulgaria,25.195,42.469
+44,Bahamas,-78.018,24.66
+70,Bosnia and Herzegovina,17.846,44.189
+112,Belarus,28.366,53.825
+84,Belize,-88.714,17.269
+68,Bolivia,-64.733,-16.69
+76,Brazil,-49.777,-11.26
+96,Brunei,115.01,4.723
+64,Bhutan,90.144,27.537
+72,Botswana,24.159,-22.054
+140,Central African Republic,21.01,6.901
+124,Canada,-104.473,58.546
+756,Switzerland,7.634,46.716
+152,Chile,-72.393,-38.243
+156,China,106.422,32.526
+384,Côte d'Ivoire,-5.554,7.503
+120,Cameroon,12.042,4.668
+180,Democratic Republic of the Congo,23.441,-1.804
+178,Congo,15.803,-0.008
+170,Colombia,-73.17,3.5
+188,Costa Rica,-84.06,10.065
+192,Cuba,-77.98,21.496
+196,Cyprus,33.04,34.861
+203,Czechia,14.736,49.943
+276,Germany,9.751,51.248
+262,Djibouti,42.234,11.573
+208,Denmark,9.172,56.259
+214,Dominican Republic,-70.888,19.107
+12,Algeria,3.303,27.93
+218,Ecuador,-78.428,-1.222
+818,Egypt,29.352,26.178
+232,Eritrea,37.884,16.165
+724,Spain,-3.523,40.058
+233,Estonia,25.871,58.671
+231,Ethiopia,39.045,8.09
+246,Finland,27.2,63.279
+242,Fiji,177.949,-17.871
+238,Falkland Islands,-59.302,-51.817
+250,France,2.435,46.771
+266,Gabon,11.124,-0.805
+826,United Kingdom,-1.412,52.49
+268,Georgia,43.431,42.013
+288,Ghana,-1.063,7.747
+324,Guinea,-9.9,10.597
+270,Gambia,-16.034,13.373
+624,Guinea-Bissau,-15.139,12.004
+226,Equatorial Guinea,10.366,1.669
+300,Greece,21.708,39.474
+304,Greenland,-39.418,74.421
+320,Guatemala,-90.566,14.983
+328,Guyana,-58.935,5.673
+340,Honduras,-86.802,14.793
+191,Croatia,16.526,45.848
+332,Haiti,-72.164,19.236
+348,Hungary,19.42,47.151
+360,Indonesia,101.637,-0.24
+356,India,78.604,22.531
+372,Ireland,-8.04,53.074
+364,Iran,54.94,32.047
+368,Iraq,43.276,33.099
+352,Iceland,-18.863,64.876
+376,Israel,34.884,30.905
+380,Italy,12.619,42.741
+388,Jamaica,-77.325,18.097
+400,Jordan,36.391,30.754
+392,Japan,138.967,36.284
+398,Kazakhstan,68.984,48.295
+404,Kenya,37.867,0.466
+417,Kyrgyzstan,74.621,41.733
+116,Cambodia,104.399,12.608
+410,South Korea,128.021,36.287
+414,Kuwait,47.614,29.49
+418,Laos,102.565,19.428
+422,Lebanon,35.798,33.882
+430,Liberia,-9.603,6.472
+434,Libya,17.974,26.586
+144,Sri Lanka,80.687,7.665
+426,Lesotho,28.152,-29.589
+440,Lithuania,24.104,55.102
+442,Luxembourg,5.972,49.766
+428,Latvia,25.426,57.005
+504,Morocco,-7.217,31.724
+498,Moldova,28.385,47.468
+450,Madagascar,46.691,-18.26
+484,Mexico,-102.813,25.089
+807,North Macedonia,21.55,41.578
+466,Mali,-2.048,18.423
+104,Myanmar,95.833,21.479
+499,Montenegro,19.193,42.856
+496,Mongolia,104.038,46.034
+508,Mozambique,37.76,-13.899
+478,Mauritania,-9.729,19.48
+454,Malawi,33.831,-11.499
+458,Malaysia,113.81,2.402
+516,Namibia,17.154,-22.21
+540,New Caledonia,165.511,-21.274
+562,Niger,9.443,17.448
+566,Nigeria,7.882,9.613
+558,Nicaragua,-85.054,12.577
+528,Netherlands,5.383,52.417
+578,Norway,8.566,60.941
+524,Nepal,83.339,28.411
+554,New Zealand,169.605,-45.037
+512,Oman,57.399,22.125
+586,Pakistan,70.828,30.212
+591,Panama,-81.063,8.328
+604,Peru,-72.895,-13.065
+608,Philippines,121.397,16.955
+598,Papua New Guinea,143.441,-5.835
+616,Poland,19.311,52.0
+630,Puerto Rico,-66.479,18.249
+408,North Korea,126.4,39.876
+620,Portugal,-8.341,39.111
+600,Paraguay,-60.072,-21.685
+275,Palestine,35.279,32.011
+634,Qatar,51.184,25.324
+642,Romania,24.854,45.729
+643,Russia,100.394,64.007
+646,Rwanda,29.919,-1.89
+732,Western Sahara,-12.553,24.022
+682,Saudi Arabia,44.676,23.791
+729,Sudan,29.196,16.309
+728,South Sudan,30.112,7.133
+686,Senegal,-14.51,15.092
+90,Solomon Islands,159.104,-7.906
+694,Sierra Leone,-11.824,8.486
+222,El Salvador,-88.873,13.721
+706,Somalia,44.111,3.258
+688,Serbia,20.615,44.318
+740,Suriname,-55.95,4.139
+703,Slovakia,19.078,48.798
+705,Slovenia,14.917,46.02
+752,Sweden,15.085,62.34
+748,Eswatini,31.382,-26.512
+760,Syria,38.219,34.976
+148,Chad,18.68,15.265
+768,Togo,1.062,8.888
+764,Thailand,101.286,15.512
+762,Tajikistan,72.547,38.355
+795,Turkmenistan,59.382,39.558
+626,Timor-Leste,125.949,-8.764
+780,Trinidad and Tobago,-61.289,10.456
+788,Tunisia,9.069,33.806
+792,Türkiye,34.757,39.409
+158,Taiwan,120.912,23.768
+834,Tanzania,34.753,-5.844
+800,Uganda,32.41,1.041
+804,Ukraine,32.256,49.199
+858,Uruguay,-56.053,-32.824
+840,United States,-97.12,39.732
+860,Uzbekistan,64.046,41.724
+862,Venezuela,-64.574,7.196
+704,Vietnam,105.445,21.53
+548,Vanuatu,166.903,-15.221
+887,Yemen,45.864,15.315
+710,South Africa,23.619,-29.578
+894,Zambia,26.365,-14.604
+716,Zimbabwe,29.86,-18.847
