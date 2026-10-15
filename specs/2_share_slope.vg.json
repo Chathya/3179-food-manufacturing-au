@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Slope chart. Each manufacturing industry's share of total manufacturing value added in 2006-07 and 2024-25. Food is highlighted; machinery, metal products and metals (the biggest fall) are labelled directly.",
+  "description": "Slope chart. Each manufacturing industry's share of total manufacturing value added in 2006 to 2007 and 2024 to 2025. Food is highlighted; machinery, metal products and metals (the biggest fall) are labelled directly.",
   "width": "container",
   "height": 420,
   "data": {
@@ -86,7 +86,7 @@
         "color": {
           "condition": {
             "test": "datum['Is food']",
-            "value": "#eb6834"
+            "value": "#4a2c1d"
           },
           "value": "#cfc8bc"
         },
@@ -113,7 +113,7 @@
         "color": {
           "condition": {
             "test": "datum['Is food']",
-            "value": "#eb6834"
+            "value": "#4a2c1d"
           },
           "value": "#b9b1a4"
         },
@@ -168,7 +168,7 @@
         "dx": 10,
         "fontSize": 12.5,
         "fontWeight": "bold",
-        "color": "#b8481b"
+        "color": "#4a2c1d"
       },
       "encoding": {
         "text": {
@@ -188,7 +188,7 @@
         "dx": -10,
         "fontSize": 12,
         "fontWeight": "bold",
-        "color": "#b8481b"
+        "color": "#4a2c1d"
       },
       "encoding": {
         "text": {

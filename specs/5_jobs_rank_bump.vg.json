@@ -187,6 +187,44 @@
           "value": "#23201c"
         }
       }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Year": 2019.4,
+            "Rank": 1.5,
+            "Text": "Only in 2020 did meat overtake bakeries"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#2b211b"
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "Rank",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Text"
+        },
+        "color": {
+          "value": "#2b211b"
+        },
+        "opacity": {
+          "value": 1
+        }
+      }
     }
   ],
   "config": {

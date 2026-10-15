@@ -16,89 +16,150 @@
   ],
   "width": "container",
   "height": 260,
-  "mark": {
-    "type": "rect",
-    "stroke": "#ffffff",
-    "strokeWidth": 1.5,
-    "cornerRadius": 2
-  },
-  "encoding": {
-    "x": {
-      "field": "Year",
-      "type": "ordinal",
-      "title": null,
-      "axis": {
-        "labelAngle": 0,
-        "labelExpr": "datum.value % 5 == 0 ? datum.value : ''",
-        "ticks": false,
-        "domain": false
-      }
-    },
-    "y": {
-      "field": "Industry",
-      "type": "nominal",
-      "title": null,
-      "sort": {
-        "field": "Workers",
-        "op": "mean",
-        "order": "descending"
-      },
-      "axis": {
-        "ticks": false,
-        "domain": false,
-        "labelLimit": 200
-      }
-    },
-    "color": {
-      "field": "Change",
-      "type": "quantitative",
-      "title": "Change since 2006 (per cent)",
-      "scale": {
-        "domainMid": 0,
-        "range": [
-          "#b8481b",
-          "#f3a37f",
-          "#f0eee9",
-          "#86b6ef",
-          "#1c5cab"
-        ],
-        "clamp": true,
-        "interpolate": "lab"
-      },
-      "legend": {
-        "orient": "top",
-        "gradientLength": 220,
-        "direction": "horizontal",
-        "titleOrient": "left"
-      }
-    },
-    "tooltip": [
-      {
-        "field": "Industry",
-        "type": "nominal",
-        "title": "Food industry"
-      },
-      {
-        "field": "Year",
-        "type": "ordinal",
-        "title": "Year"
-      },
-      {
-        "field": "Workers",
-        "type": "quantitative",
-        "title": "Workers (thousands)",
-        "format": ".1f"
-      },
-      {
-        "field": "Change",
-        "type": "quantitative",
-        "title": "Change since 2006 (per cent)",
-        "format": "+.0f"
-      }
-    ]
-  },
   "autosize": {
     "type": "fit-x",
     "contains": "padding"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#ffffff",
+        "strokeWidth": 1.5,
+        "cornerRadius": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelAngle": 0,
+            "labelExpr": "datum.value % 5 == 0 ? datum.value : ''",
+            "ticks": false,
+            "domain": false
+          }
+        },
+        "y": {
+          "field": "Industry",
+          "type": "nominal",
+          "title": null,
+          "sort": {
+            "field": "Workers",
+            "op": "mean",
+            "order": "descending"
+          },
+          "axis": {
+            "ticks": false,
+            "domain": false,
+            "labelLimit": 200
+          }
+        },
+        "color": {
+          "field": "Change",
+          "type": "quantitative",
+          "title": "Change since 2006 (per cent)",
+          "scale": {
+            "domainMid": 0,
+            "range": [
+              "#a0522d",
+              "#d8a982",
+              "#f2efe9",
+              "#8fc4bd",
+              "#1f7a74"
+            ],
+            "clamp": true,
+            "interpolate": "lab"
+          },
+          "legend": {
+            "orient": "top",
+            "gradientLength": 240,
+            "direction": "horizontal",
+            "titleOrient": "left"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Food industry"
+          },
+          {
+            "field": "Year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "Workers",
+            "type": "quantitative",
+            "title": "Workers (thousands)",
+            "format": ".1f"
+          },
+          {
+            "field": "Change",
+            "type": "quantitative",
+            "title": "Change since 2006 (per cent)",
+            "format": "+.0f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "Year",
+              "as": "Last year"
+            }
+          ]
+        },
+        {
+          "filter": "datum['Year'] == datum['Last year']"
+        },
+        {
+          "calculate": "(datum['Change'] > 0 ? '+' : '') + format(datum['Change'], '.0f') + '%'",
+          "as": "Label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "Industry",
+          "type": "nominal",
+          "sort": {
+            "field": "Workers",
+            "op": "mean",
+            "order": "descending"
+          }
+        },
+        "text": {
+          "field": "Label"
+        },
+        "color": {
+          "condition": {
+            "test": "abs(datum['Change']) > 45",
+            "value": "#ffffff"
+          },
+          "value": "#2b211b"
+        }
+      }
+    }
+  ],
+  "encoding": {},
+  "padding": {
+    "left": 24,
+    "top": 5,
+    "right": 5,
+    "bottom": 5
   }
 }

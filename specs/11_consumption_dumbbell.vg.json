@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Dumbbell chart in two panels. Grams of each food group bought per person per day in 2018-19 (hollow dot) and 2023-24 (filled dot). Bars are blue where buying rose and orange where it fell. Everyday staples and smaller items get their own scale so small changes stay visible. Sorted by percentage change.",
+  "description": "Dumbbell chart in two panels. Grams of each food group bought per person per day in 2018 to 2019 (hollow dot) and 2023 to 2024 (filled dot). Bars are blue where buying rose and orange where it fell. Everyday staples and smaller items get their own scale so small changes stay visible. Sorted by percentage change.",
   "data": {
     "url": "data/clean/food_consumption.csv"
   },
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "calculate": "datum['2023–24'] - datum['2018–19']",
+      "calculate": "datum['2023 to 2024'] - datum['2018 to 2019']",
       "as": "Change in grams"
     },
     {
@@ -27,11 +27,11 @@
       "as": "Direction"
     },
     {
-      "calculate": "round(datum['Change in grams'] / datum['2018–19'] * 1000) / 10",
+      "calculate": "round(datum['Change in grams'] / datum['2018 to 2019'] * 1000) / 10",
       "as": "Change in per cent"
     },
     {
-      "calculate": "max(datum['2018–19'], datum['2023–24'])",
+      "calculate": "max(datum['2018 to 2019'], datum['2023 to 2024'])",
       "as": "Right end"
     },
     {
@@ -89,7 +89,7 @@
         },
         "encoding": {
           "x": {
-            "field": "2018–19",
+            "field": "2018 to 2019",
             "type": "quantitative",
             "title": "Grams per person per day",
             "scale": {
@@ -101,7 +101,7 @@
             }
           },
           "x2": {
-            "field": "2023–24"
+            "field": "2023 to 2024"
           },
           "color": {
             "field": "Direction",
@@ -113,8 +113,8 @@
                 "Bought less"
               ],
               "range": [
-                "#2a78d6",
-                "#eb6834"
+                "#1f7a74",
+                "#a0522d"
               ]
             },
             "legend": {
@@ -129,15 +129,15 @@
               "title": "Food group"
             },
             {
-              "field": "2018–19",
+              "field": "2018 to 2019",
               "type": "quantitative",
-              "title": "Grams a day in 2018–19",
+              "title": "Grams a day in 2018 to 2019",
               "format": ".1f"
             },
             {
-              "field": "2023–24",
+              "field": "2023 to 2024",
               "type": "quantitative",
-              "title": "Grams a day in 2023–24",
+              "title": "Grams a day in 2023 to 2024",
               "format": ".1f"
             },
             {
@@ -160,7 +160,7 @@
         },
         "encoding": {
           "x": {
-            "field": "2018–19",
+            "field": "2018 to 2019",
             "type": "quantitative"
           }
         }
@@ -174,7 +174,7 @@
         },
         "encoding": {
           "x": {
-            "field": "2023–24",
+            "field": "2023 to 2024",
             "type": "quantitative"
           },
           "tooltip": [
@@ -184,15 +184,15 @@
               "title": "Food group"
             },
             {
-              "field": "2023–24",
+              "field": "2023 to 2024",
               "type": "quantitative",
-              "title": "Grams a day in 2023–24",
+              "title": "Grams a day in 2023 to 2024",
               "format": ".1f"
             },
             {
               "field": "Change in per cent",
               "type": "quantitative",
-              "title": "Change since 2018–19 (per cent)",
+              "title": "Change since 2018 to 2019 (per cent)",
               "format": "+.1f"
             }
           ]
@@ -228,6 +228,6 @@
     "left": 5,
     "top": 5,
     "bottom": 5,
-    "right": 45
+    "right": 62
   }
 }
