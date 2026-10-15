@@ -80,8 +80,8 @@ COUNTRY_NAMES = {
 
 
 def financial_year(year_ending_june: int) -> str:
-    """2025 -> '2024–25' (en dash, as on the page)."""
-    return f"{year_ending_june - 1}–{str(year_ending_june)[2:]}"
+    """2025 -> '2024 to 2025'. Written out in full, with no dash, as on the page."""
+    return f"{year_ending_june - 1} to {year_ending_june}"
 
 
 def save(df: pd.DataFrame, name: str) -> None:
@@ -319,7 +319,7 @@ def clean_dairy_products():
         for y, v in zip(years, t.iloc[11:, c]):
             v = pd.to_numeric(v, errors="coerce")
             if pd.notna(v) and re.match(r"\d{4}–\d{2}", y):
-                rows.append({"Year": y, "Year ending June": int(y[:4]) + 1, "Product": product,
+                rows.append({"Year": financial_year(int(y[:4]) + 1), "Year ending June": int(y[:4]) + 1, "Product": product,
                              "Production (thousand tonnes)": v})
     df = pd.DataFrame(rows)
     save(df, "dairy_products.csv")
@@ -356,11 +356,11 @@ def clean_consumption():
     major = t[(t[0] == "Major") & t[2].isin(CONSUMPTION_GROUPS)]
     rows = []
     for _, r in major.iterrows():
-        for year, col in (("2018–19", 9), ("2023–24", 14)):
+        for year, col in (("2018 to 2019", 9), ("2023 to 2024", 14)):
             rows.append({"Food group": CONSUMPTION_GROUPS[r[2]], "Food group (full name)": r[2],
                          "Year": year, "Grams per person per day": r[col]})
     df = pd.DataFrame(rows)
-    big = df[df["Year"] == "2018–19"].set_index("Food group")["Grams per person per day"] >= 100
+    big = df[df["Year"] == "2018 to 2019"].set_index("Food group")["Grams per person per day"] >= 100
     df["Panel"] = df["Food group"].map(lambda g: "Everyday staples (over 100 grams a day)" if big[g]
                                        else "Smaller items (under 100 grams a day)")
     save(df, "food_consumption.csv")
