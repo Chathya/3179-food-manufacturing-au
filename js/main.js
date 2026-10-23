@@ -37,7 +37,7 @@ const charts = {
   "chart-consumption": "specs/11_consumption_dumbbell.vg.json"
 };
 
-const embedOptions = { actions: false, renderer: "svg", config: theme };
+const embedOptions = { actions: false, renderer: "svg", config: theme }; //false to hide the 3 dots 
 
 for (const [id, spec] of Object.entries(charts)) {
   vegaEmbed(`#${id}`, spec, embedOptions).then(result => {

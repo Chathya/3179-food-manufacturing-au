@@ -262,7 +262,7 @@
           "mark": {
             "type": "rule",
             "color": {
-              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#FAD000' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#9A8180' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
             },
             "strokeCap": "round"
           },
@@ -341,7 +341,7 @@
           "mark": {
             "type": "circle",
             "color": {
-              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#FAD000' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#9A8180' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
             },
             "size": 40,
             "stroke": "#ffffff",
