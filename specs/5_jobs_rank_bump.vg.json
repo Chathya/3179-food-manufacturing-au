@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Bump chart. Rank of each food industry by number of workers, each year. Hovering a line brings it into focus and fades the rest into context.",
+  "description": "Bump chart. Rank of each food industry by number of workers, each year. Every industry keeps its own colour from the rest of the page. Bakeries, the key finding, are drawn thickest. Hovering a line thickens it and names the industry. A note marks 2020, when meat overtook bakeries.",
   "data": {
     "url": "data/clean/food_jobs_by_industry.csv"
   },
@@ -28,7 +28,7 @@
     }
   ],
   "width": "container",
-  "height": 300,
+  "height": 440,
   "encoding": {
     "x": {
       "field": "Year",
@@ -53,11 +53,11 @@
     "y": {
       "field": "Rank",
       "type": "quantitative",
-      "title": "Rank (1 is the most workers)",
+      "title": null,
       "scale": {
         "reverse": true,
         "domain": [
-          0.6,
+          -0.2,
           8.4
         ],
         "nice": false
@@ -75,44 +75,15 @@
         ],
         "grid": false
       }
-    },
-    "color": {
-      "field": "Industry",
-      "type": "nominal",
-      "legend": null,
-      "scale": {
-        "domain": [
-          "Seafood",
-          "Bakery products",
-          "Dairy products",
-          "Grain and cereal products",
-          "Sugar and confectionery",
-          "Fruit and vegetables",
-          "Other food products",
-          "Meat products"
-        ],
-        "range": [
-          "#e34948",
-          "#eb6834",
-          "#FAD000",
-          "#e87ba4",
-          "#9A8180",
-          "#eda100",
-          "#2a78d6",
-          "#6250d6"
-        ]
-      }
-    },
-    "opacity": {
-      "condition": {
-        "param": "pick",
-        "value": 1
-      },
-      "value": 0.15
     }
   },
   "layer": [
     {
+      "transform": [
+        {
+          "filter": "!(datum['Industry'] == 'Bakery products')"
+        }
+      ],
       "params": [
         {
           "name": "pick",
@@ -128,16 +99,185 @@
       ],
       "mark": {
         "type": "line",
-        "strokeWidth": 3,
-        "interpolate": "monotone",
-        "strokeCap": "round"
+        "strokeWidth": 2.8,
+        "strokeCap": "round",
+        "strokeJoin": "round",
+        "opacity": 0.85
+      },
+      "encoding": {
+        "detail": {
+          "field": "Industry",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "Industry",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meat products",
+              "Bakery products",
+              "Dairy products",
+              "Sugar and confectionery",
+              "Fruit and vegetables",
+              "Grain and cereal products",
+              "Seafood",
+              "Other food products"
+            ],
+            "range": [
+              "#B5301F",
+              "#F08A00",
+              "#3F9EDC",
+              "#E27AB0",
+              "#7E57C2",
+              "#D2BC55",
+              "#1B3F8B",
+              "#8D8579"
+            ]
+          },
+          "legend": null
+        }
       }
     },
     {
+      "transform": [
+        {
+          "filter": {
+            "param": "pick",
+            "empty": false
+          }
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 5,
+        "strokeCap": "round",
+        "strokeJoin": "round"
+      },
+      "encoding": {
+        "detail": {
+          "field": "Industry",
+          "type": "nominal"
+        },
+        "color": {
+          "field": "Industry",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meat products",
+              "Bakery products",
+              "Dairy products",
+              "Sugar and confectionery",
+              "Fruit and vegetables",
+              "Grain and cereal products",
+              "Seafood",
+              "Other food products"
+            ],
+            "range": [
+              "#B5301F",
+              "#F08A00",
+              "#3F9EDC",
+              "#E27AB0",
+              "#7E57C2",
+              "#D2BC55",
+              "#1B3F8B",
+              "#8D8579"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "!(datum['Industry'] == 'Bakery products')"
+        }
+      ],
       "mark": {
         "type": "point",
         "filled": true,
-        "size": 45
+        "size": 50,
+        "opacity": 0.9
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Food industry"
+          },
+          {
+            "field": "Year",
+            "type": "quantitative",
+            "title": "Year",
+            "format": "d"
+          },
+          {
+            "field": "Rank",
+            "type": "quantitative",
+            "title": "Rank"
+          },
+          {
+            "field": "Workers",
+            "type": "quantitative",
+            "title": "Workers (thousands)",
+            "format": ".1f"
+          }
+        ],
+        "color": {
+          "field": "Industry",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meat products",
+              "Bakery products",
+              "Dairy products",
+              "Sugar and confectionery",
+              "Fruit and vegetables",
+              "Grain and cereal products",
+              "Seafood",
+              "Other food products"
+            ],
+            "range": [
+              "#B5301F",
+              "#F08A00",
+              "#3F9EDC",
+              "#E27AB0",
+              "#7E57C2",
+              "#D2BC55",
+              "#1B3F8B",
+              "#8D8579"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Industry'] == 'Bakery products'"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 6,
+        "color": "#F08A00",
+        "strokeCap": "round",
+        "strokeJoin": "round"
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Industry'] == 'Bakery products'"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 70,
+        "color": "#F08A00"
       },
       "encoding": {
         "tooltip": [
@@ -169,22 +309,66 @@
     {
       "transform": [
         {
-          "filter": "datum['Year'] == datum['Last year']"
+          "filter": "datum['Year'] == datum['Last year'] && !(datum['Industry'] == 'Bakery products')"
         }
       ],
       "mark": {
         "type": "text",
         "align": "left",
         "dx": 10,
-        "fontSize": 12,
-        "color": "#23201c"
+        "fontSize": 13,
+        "fontWeight": 600
       },
       "encoding": {
         "text": {
           "field": "Industry"
         },
         "color": {
-          "value": "#23201c"
+          "field": "Industry",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meat products",
+              "Bakery products",
+              "Dairy products",
+              "Sugar and confectionery",
+              "Fruit and vegetables",
+              "Grain and cereal products",
+              "Seafood",
+              "Other food products"
+            ],
+            "range": [
+              "#b5301f",
+              "#9a5200",
+              "#1a639a",
+              "#a22f6f",
+              "#6c45b0",
+              "#6b5c0c",
+              "#1b3f8b",
+              "#5f564d"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Year'] == datum['Last year'] && datum['Industry'] == 'Bakery products'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "#9a5200"
+      },
+      "encoding": {
+        "text": {
+          "field": "Industry"
         }
       }
     },
@@ -192,19 +376,19 @@
       "data": {
         "values": [
           {
-            "Year": 2019.4,
-            "Rank": 1.5,
-            "Text": "Only in 2020 did meat overtake bakeries"
+            "Year": 2020,
+            "Rank": 0.2,
+            "Text": "2020: Covid-19 year. Bakeries lost 9 thousand workers while meat gained 3 thousand."
           }
         ]
       },
       "mark": {
         "type": "text",
-        "align": "right",
+        "align": "center",
         "baseline": "middle",
-        "fontSize": 12,
+        "fontSize": 12.5,
         "fontStyle": "italic",
-        "color": "#2b211b"
+        "color": "#3d3731"
       },
       "encoding": {
         "x": {
@@ -217,12 +401,6 @@
         },
         "text": {
           "field": "Text"
-        },
-        "color": {
-          "value": "#2b211b"
-        },
-        "opacity": {
-          "value": 1
         }
       }
     }

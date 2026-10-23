@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Heatmap. Rows are food industries, columns are years. Colour shows the percentage change in workers since 2006: blue for more workers, orange for fewer, grey for no change.",
+  "description": "Heatmap. Rows are food industries, columns are years. Colour shows the percentage change in workers since 2006: teal for more workers, dark grey for fewer, pale cream for no change.",
   "data": {
     "url": "data/clean/food_jobs_by_industry.csv"
   },
@@ -62,11 +62,11 @@
           "scale": {
             "domainMid": 0,
             "range": [
-              "#a0522d",
-              "#d8a982",
-              "#f2efe9",
-              "#8fc4bd",
-              "#1f7a74"
+              "#484848",
+              "#9A958E",
+              "#F2EFE9",
+              "#8FC4BD",
+              "#1F7A74"
             ],
             "clamp": true,
             "interpolate": "lab"
@@ -102,56 +102,6 @@
             "format": "+.0f"
           }
         ]
-      }
-    },
-    {
-      "transform": [
-        {
-          "joinaggregate": [
-            {
-              "op": "max",
-              "field": "Year",
-              "as": "Last year"
-            }
-          ]
-        },
-        {
-          "filter": "datum['Year'] == datum['Last year']"
-        },
-        {
-          "calculate": "(datum['Change'] > 0 ? '+' : '') + format(datum['Change'], '.0f') + '%'",
-          "as": "Label"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "fontSize": 11,
-        "fontWeight": "bold"
-      },
-      "encoding": {
-        "x": {
-          "field": "Year",
-          "type": "ordinal"
-        },
-        "y": {
-          "field": "Industry",
-          "type": "nominal",
-          "sort": {
-            "field": "Workers",
-            "op": "mean",
-            "order": "descending"
-          }
-        },
-        "text": {
-          "field": "Label"
-        },
-        "color": {
-          "condition": {
-            "test": "abs(datum['Change']) > 45",
-            "value": "#ffffff"
-          },
-          "value": "#2b211b"
-        }
       }
     }
   ],

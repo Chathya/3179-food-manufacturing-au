@@ -1,0 +1,109 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Pictogram hook. One hundred coins stand for 100 dollars of value added by Australian factories. Twenty-two are coloured because food made 22 per cent of all factory value added between July 2024 and June 2025. A parameter n counts the coloured coins up from 0 to 22 once when the page opens.",
+  "width": "container",
+  "height": 340,
+  "params": [
+    {
+      "name": "n",
+      "value": 22
+    }
+  ],
+  "data": {
+    "sequence": {
+      "start": 0,
+      "stop": 100,
+      "as": "i"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.i % 10",
+      "as": "Column"
+    },
+    {
+      "calculate": "floor(datum.i / 10)",
+      "as": "Row"
+    },
+    {
+      "calculate": "datum.i < n ? 'From food factories' : 'From other factories'",
+      "as": "Group"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Column",
+      "type": "ordinal",
+      "axis": null
+    },
+    "y": {
+      "field": "Row",
+      "type": "ordinal",
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "point",
+        "shape": "circle",
+        "filled": true,
+        "opacity": 1,
+        "size": 560
+      },
+      "encoding": {
+        "color": {
+          "field": "Group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "From food factories",
+              "From other factories"
+            ],
+            "range": [
+              "#F2B705",
+              "#d3ccc0"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "Group",
+            "type": "nominal",
+            "title": "This dollar of factory value"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "$",
+        "fontSize": 15,
+        "fontWeight": "bold",
+        "font": "Bricolage Grotesque, Arial, sans-serif",
+        "baseline": "middle",
+        "dy": 1
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.i < n",
+            "value": "#4a2c1d"
+          },
+          "value": "#8c8478"
+        }
+      }
+    }
+  ],
+  "view": {
+    "stroke": null
+  },
+  "padding": {
+    "left": 2,
+    "right": 2,
+    "top": 2,
+    "bottom": 2
+  }
+}

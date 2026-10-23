@@ -60,7 +60,7 @@
         "type": "text",
         "fontSize": 13,
         "fontStyle": "italic",
-        "color": "#a39b8f",
+        "color": "#8A8176",
         "clip": true
       },
       "encoding": {
@@ -247,7 +247,7 @@
         "align": "right",
         "baseline": "bottom",
         "fontSize": 12,
-        "color": "#57514a",
+        "color": "#4F4841",
         "lineBreak": "|",
         "text": "Spike height shows tonnes crushed.|Hover over a spike for the exact number."
       }

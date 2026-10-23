@@ -376,7 +376,7 @@ DAIRY_REGION_PLACES = {  # region: (longitude, latitude, label longitude, label 
     "Tasmania": (146.4, -41.4, 147.7, -42.2, "right"),
     "New South Wales": (150.6, -33.2, 151.7, -33.2, "right"),
     "South Australia": (139.0, -35.0, 137.9, -34.6, "left"),
-    "Western Australia": (116.0, -33.2, 117.1, -33.2, "right"),
+    "Western Australia": (116.0, -33.2, 114.8, -31.4, "right"),
     "Subtropical": (152.4, -27.4, 153.4, -27.4, "right"),
 }
 

@@ -9,7 +9,7 @@
   "transform": [
     {
       "calculate": "toNumber(datum['Share of manufacturing (per cent)'])",
-      "as": "Share"
+      "as": "Raw share"
     },
     {
       "calculate": "datum['Industry'] == 'Food products'",
@@ -25,8 +25,33 @@
           "op": "max",
           "field": "Year",
           "as": "Last year"
+        },
+        {
+          "op": "min",
+          "field": "Year",
+          "as": "First year"
         }
       ]
+    },
+    {
+      "calculate": "datum['Year'] == datum['First year'] ? datum['Raw share'] : null",
+      "as": "Start value"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "Start value",
+          "as": "Start share"
+        }
+      ],
+      "groupby": [
+        "Industry"
+      ]
+    },
+    {
+      "calculate": "datum['Year'] == datum['Last year'] ? datum['Start share'] + (datum['Raw share'] - datum['Start share']) * progress : datum['Raw share']",
+      "as": "Share"
     },
     {
       "window": [
@@ -66,10 +91,16 @@
     "y": {
       "field": "Share",
       "type": "quantitative",
-      "title": "Share of manufacturing value added (per cent)",
+      "title": null,
       "axis": {
         "grid": false,
         "tickCount": 5
+      },
+      "scale": {
+        "domain": [
+          0,
+          24
+        ]
       }
     },
     "detail": {
@@ -86,9 +117,9 @@
         "color": {
           "condition": {
             "test": "datum['Is food']",
-            "value": "#4a2c1d"
+            "value": "#D08800"
           },
-          "value": "#cfc8bc"
+          "value": "#a9bdd1"
         },
         "strokeWidth": {
           "condition": {
@@ -113,9 +144,9 @@
         "color": {
           "condition": {
             "test": "datum['Is food']",
-            "value": "#4a2c1d"
+            "value": "#D08800"
           },
-          "value": "#b9b1a4"
+          "value": "#8fa6bd"
         },
         "tooltip": [
           {
@@ -148,7 +179,7 @@
         "align": "left",
         "dx": 10,
         "fontSize": 12,
-        "color": "#57514a"
+        "color": "#4F4841"
       },
       "encoding": {
         "text": {
@@ -168,7 +199,7 @@
         "dx": 10,
         "fontSize": 12.5,
         "fontWeight": "bold",
-        "color": "#4a2c1d"
+        "color": "#8a5a00"
       },
       "encoding": {
         "text": {
@@ -188,7 +219,7 @@
         "dx": -10,
         "fontSize": 12,
         "fontWeight": "bold",
-        "color": "#4a2c1d"
+        "color": "#8a5a00"
       },
       "encoding": {
         "text": {
@@ -209,7 +240,7 @@
         "align": "right",
         "dx": -10,
         "fontSize": 12,
-        "color": "#57514a"
+        "color": "#4F4841"
       },
       "encoding": {
         "text": {
@@ -229,5 +260,11 @@
     "top": 5,
     "bottom": 5,
     "right": 160
-  }
+  },
+  "params": [
+    {
+      "name": "progress",
+      "value": 1
+    }
+  ]
 }

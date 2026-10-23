@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Waffle chart. One hundred squares, each one per cent of food manufacturing value added in 2024 to 2025, coloured by food industry.",
+  "description": "Waffle chart. Each square is one per cent of food manufacturing value added in 2024 to 2025. Squares fill down each column, so every food industry forms one block. Colour hue shows the food industry. Seafood is under one per cent, so it is drawn as an outline instead of a full square.",
   "data": {
     "url": "data/clean/food_waffle.csv"
   },
@@ -10,36 +10,88 @@
       "as": "Square"
     },
     {
-      "calculate": "datum['Square'] % 20",
-      "as": "Column"
+      "calculate": "datum['Industry'] == 'Seafood' ? 99 : datum['Industry'] == 'Other food products' ? datum['Square'] - 1 : datum['Square']",
+      "as": "Position"
     },
     {
-      "calculate": "floor(datum['Square'] / 20)",
-      "as": "Row"
+      "calculate": "floor(datum['Position'] / 5) + 0.07",
+      "as": "Left"
+    },
+    {
+      "calculate": "floor(datum['Position'] / 5) + 0.93",
+      "as": "Right"
+    },
+    {
+      "calculate": "datum['Position'] % 5 + 0.07",
+      "as": "Top"
+    },
+    {
+      "calculate": "datum['Position'] % 5 + 0.93",
+      "as": "Bottom"
     }
   ],
   "width": "container",
   "height": 190,
+  "padding": {
+    "left": 4,
+    "right": 4,
+    "top": 6,
+    "bottom": 4
+  },
   "layer": [
     {
+      "transform": [
+        {
+          "filter": "datum['Industry'] != 'Seafood'"
+        }
+      ],
       "mark": {
-        "type": "square",
-        "size": 330,
-        "filled": true,
-        "stroke": "#ffffff",
-        "strokeWidth": 2,
-        "opacity": 1
+        "type": "rect",
+        "cornerRadius": 2
       },
+      "params": [
+        {
+          "name": "pick",
+          "select": {
+            "type": "point",
+            "fields": [
+              "Industry"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
       "encoding": {
         "x": {
-          "field": "Column",
-          "type": "ordinal",
-          "axis": null
+          "field": "Left",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {
+            "domain": [
+              0,
+              20
+            ],
+            "nice": false
+          }
+        },
+        "x2": {
+          "field": "Right"
         },
         "y": {
-          "field": "Row",
-          "type": "ordinal",
-          "axis": null
+          "field": "Top",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {
+            "domain": [
+              0,
+              5
+            ],
+            "reverse": true,
+            "nice": false
+          }
+        },
+        "y2": {
+          "field": "Bottom"
         },
         "color": {
           "field": "Industry",
@@ -56,26 +108,34 @@
               "Other food products"
             ],
             "range": [
-              "#e34948",
-              "#eb6834",
-              "#FAD000",
-              "#e87ba4",
-              "#9A8180",
-              "#eda100",
-              "#2a78d6",
-              "#6250d6"
+              "#B5301F",
+              "#F08A00",
+              "#3F9EDC",
+              "#E27AB0",
+              "#7E57C2",
+              "#D2BC55",
+              "#1B3F8B",
+              "#8D8579"
             ]
           },
           "legend": {
             "orient": "bottom",
             "title": null,
-            "columns": 2,
+            "columns": 4,
             "symbolType": "square",
             "labelLimit": 260,
-            "columnPadding": 40,
-            "rowPadding": 6,
-            "labelExpr": "datum.label == 'Meat products' ? 'Meat products  35%' : datum.label == 'Bakery products' ? 'Bakery products  15%' : datum.label == 'Dairy products' ? 'Dairy products  11%' : datum.label == 'Sugar and confectionery' ? 'Sugar and confectionery  10%' : datum.label == 'Fruit and vegetables' ? 'Fruit and vegetables  6%' : datum.label == 'Grain and cereal products' ? 'Grain and cereal products  5%' : datum.label == 'Seafood' ? 'Seafood  under 1%' : datum.label == 'Other food products' ? 'Other food products  17%' : datum.label"
+            "columnPadding": 10,
+            "rowPadding": 5,
+            "labelFontSize": 12,
+            "labelExpr": "datum.label == 'Meat products' ? 'Meat products  35%' : datum.label == 'Bakery products' ? 'Bakery products  15%' : datum.label == 'Dairy products' ? 'Dairy products  11%' : datum.label == 'Sugar and confectionery' ? 'Sugar and confectionery  10%' : datum.label == 'Fruit and vegetables' ? 'Fruit and vegetables  6%' : datum.label == 'Grain and cereal products' ? 'Grain and cereal products  5%' : datum.label == 'Seafood' ? 'Seafood  under 1% (outline)' : datum.label == 'Other food products' ? 'Other food products  17%' : datum.label"
           }
+        },
+        "opacity": {
+          "condition": {
+            "param": "pick",
+            "value": 1
+          },
+          "value": 0.2
         },
         "tooltip": [
           {
@@ -95,51 +155,74 @@
             "title": "Value added (million dollars)",
             "format": ",.0f"
           }
-        ],
-        "opacity": {
-          "condition": {
-            "param": "pick",
-            "value": 1
-          },
-          "value": 0.2
-        }
-      },
-      "params": [
-        {
-          "name": "pick",
-          "select": {
-            "type": "point",
-            "fields": [
-              "Industry"
-            ]
-          },
-          "bind": "legend"
-        }
-      ]
+        ]
+      }
     },
     {
-      "data": {
-        "values": [
-          {}
-        ]
-      },
+      "transform": [
+        {
+          "filter": "datum['Industry'] == 'Seafood'"
+        }
+      ],
       "mark": {
-        "type": "text",
-        "x": 0,
-        "y": -16,
-        "align": "left",
-        "baseline": "bottom",
-        "fontSize": 13,
-        "fontWeight": "bold",
-        "color": "#2b211b",
-        "text": "Meat alone fills 35 of the 100 squares. Seafood fills less than one."
+        "type": "rect",
+        "cornerRadius": 2,
+        "fill": null,
+        "stroke": "#1B3F8B",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "Left",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {
+            "domain": [
+              0,
+              20
+            ],
+            "nice": false
+          }
+        },
+        "x2": {
+          "field": "Right"
+        },
+        "y": {
+          "field": "Top",
+          "type": "quantitative",
+          "axis": null,
+          "scale": {
+            "domain": [
+              0,
+              5
+            ],
+            "reverse": true,
+            "nice": false
+          }
+        },
+        "y2": {
+          "field": "Bottom"
+        },
+        "tooltip": [
+          {
+            "field": "Industry",
+            "type": "nominal",
+            "title": "Food industry"
+          },
+          {
+            "field": "Share (per cent)",
+            "type": "quantitative",
+            "title": "Share of food value added (per cent)",
+            "format": ".1f"
+          },
+          {
+            "field": "Value added (million dollars)",
+            "type": "quantitative",
+            "title": "Value added (million dollars)",
+            "format": ",.0f"
+          }
+        ]
       }
     }
-  ],
-  "padding": {
-    "left": 5,
-    "top": 28,
-    "bottom": 5,
-    "right": 5
-  }
+  ]
 }

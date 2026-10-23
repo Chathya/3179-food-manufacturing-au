@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Small multiples. Annual production of the four main dairy products. Each panel has its own vertical scale so the shape of each trend can be compared.",
+  "description": "Small multiples. Annual production of the four main dairy products, drawn as straight line segments so every spike shows. All four panels share one vertical scale, so heights can be compared directly. A dashed line marks 2003, a drought year in which all four products fell. The latest year is marked with a hollow dot.",
   "data": {
     "url": "data/clean/dairy_products.csv"
   },
@@ -26,38 +26,48 @@
     ],
     "header": {
       "labelAnchor": "start",
-      "labelPadding": 4
+      "labelPadding": 3,
+      "labelFontSize": 14
     }
   },
   "columns": 2,
   "spec": {
-    "width": 280,
-    "height": 130,
+    "width": 290,
+    "height": 120,
     "layer": [
       {
+        "transform": [
+          {
+            "filter": "datum['Year ending June'] == 2003"
+          }
+        ],
         "mark": {
-          "type": "area",
-          "color": "#1baf7a",
-          "opacity": 0.12,
-          "interpolate": "monotone"
+          "type": "rule",
+          "strokeDash": [
+            4,
+            3
+          ],
+          "strokeWidth": 1.5,
+          "color": "#7a7266"
         },
         "encoding": {
           "x": {
             "field": "Year ending June",
-            "type": "quantitative"
-          },
-          "y": {
-            "field": "Production",
-            "type": "quantitative"
+            "type": "quantitative",
+            "scale": {
+              "zero": false,
+              "nice": false
+            }
           }
         }
       },
       {
         "mark": {
           "type": "line",
-          "color": "#13875e",
-          "strokeWidth": 2,
-          "interpolate": "monotone"
+          "color": "#3F9EDC",
+          "strokeWidth": 2.5,
+          "interpolate": "linear",
+          "strokeJoin": "round"
         },
         "encoding": {
           "x": {
@@ -74,35 +84,29 @@
             "field": "Production",
             "type": "quantitative",
             "title": null,
+            "scale": {
+              "domain": [
+                0,
+                480
+              ],
+              "nice": false
+            },
             "axis": {
+              "values": [
+                0,
+                200,
+                400
+              ],
               "tickCount": 3
             }
-          },
-          "tooltip": [
-            {
-              "field": "Product",
-              "type": "nominal",
-              "title": "Product"
-            },
-            {
-              "field": "Year",
-              "type": "nominal",
-              "title": "Financial year"
-            },
-            {
-              "field": "Production",
-              "type": "quantitative",
-              "title": "Production (thousand tonnes)",
-              "format": ",.0f"
-            }
-          ]
+          }
         }
       },
       {
         "mark": {
           "type": "point",
           "opacity": 0,
-          "size": 120
+          "size": 150
         },
         "encoding": {
           "x": {
@@ -139,11 +143,6 @@
             "joinaggregate": [
               {
                 "op": "max",
-                "field": "Production",
-                "as": "Peak"
-              },
-              {
-                "op": "max",
                 "field": "Year ending June",
                 "as": "Last"
               }
@@ -154,37 +153,86 @@
           },
           {
             "filter": "datum['Year ending June'] == datum['Last']"
+          }
+        ],
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "size": 70,
+          "color": "#FFFFFF",
+          "stroke": "#3F9EDC",
+          "strokeWidth": 2.5
+        },
+        "encoding": {
+          "x": {
+            "field": "Year ending June",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "Production",
+            "type": "quantitative"
+          },
+          "tooltip": [
+            {
+              "field": "Product",
+              "type": "nominal",
+              "title": "Product"
+            },
+            {
+              "field": "Year",
+              "type": "nominal",
+              "title": "Financial year"
+            },
+            {
+              "field": "Production",
+              "type": "quantitative",
+              "title": "Production (thousand tonnes)",
+              "format": ",.0f"
+            }
+          ]
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum['Year ending June'] == 2003 && datum['Product'] == 'Cheese'"
           },
           {
-            "calculate": "datum['Production'] >= 0.97 * datum['Peak'] ? 'Close to its highest level' : 'Now ' + format(100 - datum['Production'] / datum['Peak'] * 100, '.0f') + '% below its peak'",
+            "calculate": "'2003 drought: all four fell'",
             "as": "Note"
           }
         ],
         "mark": {
           "type": "text",
           "align": "right",
-          "baseline": "bottom",
+          "baseline": "top",
+          "dx": -6,
           "fontSize": 11.5,
-          "fontWeight": "bold",
-          "color": "#13875e"
+          "fontStyle": "italic",
+          "color": "#3d3731"
         },
         "encoding": {
-          "text": {
-            "field": "Note"
-          },
           "x": {
-            "value": 280
+            "field": "Year ending June",
+            "type": "quantitative",
+            "scale": {
+              "zero": false,
+              "nice": false
+            }
           },
           "y": {
-            "value": -4
+            "value": 2
+          },
+          "text": {
+            "field": "Note"
           }
         }
       }
     ]
   },
   "resolve": {
-    "scale": {
-      "y": "independent"
+    "axis": {
+      "x": "independent"
     }
   }
 }

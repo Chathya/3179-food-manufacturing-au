@@ -129,11 +129,11 @@
               "expr": "industry == 'All food industries' ? [0, 40] : industry == 'Bakery products' ? [0, 30] : industry == 'Dairy products' ? [0, 10] : industry == 'Fruit and vegetables' ? [0, 10] : industry == 'Grain and cereal products' ? [0, 10] : industry == 'Meat products' ? [0, 15] : industry == 'Other food products' ? [0, 10] : industry == 'Seafood' ? [0, 5] : industry == 'Sugar and confectionery' ? [0, 5] : [0, 50]"
             },
             "range": [
-              "#f3e3cf",
-              "#ddb98f",
-              "#b9875a",
-              "#8a5634",
-              "#4a2c1d"
+              "#e4f2ef",
+              "#b0dcd4",
+              "#6dbbb0",
+              "#2f8f87",
+              "#14524e"
             ],
             "nice": false
           },

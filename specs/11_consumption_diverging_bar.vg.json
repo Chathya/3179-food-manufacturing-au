@@ -1,0 +1,206 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Diverging bar chart. Percentage change in grams of each food group bought per person per day, 2018 to 2019 compared with 2023 to 2024. Bars to the right of zero (teal) are foods bought more; bars to the left (dark grey) are foods bought less. A menu sorts the bars by size of change or by how much is bought.",
+  "data": {
+    "url": "data/clean/food_consumption.csv"
+  },
+  "params": [
+    {
+      "name": "sortBy",
+      "value": "Biggest rise first",
+      "bind": {
+        "input": "select",
+        "name": "Sort bars by ",
+        "options": [
+          "Biggest rise first",
+          "Most bought first"
+        ]
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Grams per person per day'])",
+      "as": "Grams"
+    },
+    {
+      "pivot": "Year",
+      "value": "Grams",
+      "groupby": [
+        "Food group",
+        "Food group (full name)"
+      ]
+    },
+    {
+      "calculate": "round((datum['2023 to 2024'] - datum['2018 to 2019']) / datum['2018 to 2019'] * 1000) / 10",
+      "as": "Change in per cent"
+    },
+    {
+      "calculate": "datum['Change in per cent'] >= 0 ? 'Bought more' : 'Bought less'",
+      "as": "Direction"
+    },
+    {
+      "calculate": "(datum['Change in per cent'] > 0 ? '+' : '−') + format(abs(datum['Change in per cent']), '.0f') + '%'",
+      "as": "Change label"
+    },
+    {
+      "calculate": "sortBy == 'Most bought first' ? datum['2023 to 2024'] : datum['Change in per cent']",
+      "as": "Sort key"
+    }
+  ],
+  "width": 430,
+  "height": {
+    "step": 27
+  },
+  "encoding": {
+    "y": {
+      "field": "Food group",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "Sort key",
+        "op": "min",
+        "order": "descending"
+      },
+      "axis": {
+        "ticks": false,
+        "domain": false,
+        "labelLimit": 240,
+        "labelPadding": 8,
+        "grid": true,
+        "gridColor": "#f3efe8"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "height": {
+          "band": 0.62
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "Change in per cent",
+          "type": "quantitative",
+          "title": "Change in grams bought per person per day, 2019 to 2024 (per cent)",
+          "scale": {
+            "domain": [
+              -16,
+              38
+            ]
+          },
+          "axis": {
+            "tickCount": 6,
+            "grid": false,
+            "labelExpr": "datum.value == 0 ? '0' : (datum.value > 0 ? '+' : '−') + abs(datum.value)"
+          }
+        },
+        "color": {
+          "field": "Direction",
+          "type": "nominal",
+          "title": null,
+          "scale": {
+            "domain": [
+              "Bought more",
+              "Bought less"
+            ],
+            "range": [
+              "#1F7A74",
+              "#484848"
+            ]
+          },
+          "legend": {
+            "orient": "top",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Food group (full name)",
+            "type": "nominal",
+            "title": "Food group"
+          },
+          {
+            "field": "2018 to 2019",
+            "type": "quantitative",
+            "title": "Grams a day, 2018 to 2019",
+            "format": ".1f"
+          },
+          {
+            "field": "2023 to 2024",
+            "type": "quantitative",
+            "title": "Grams a day, 2023 to 2024",
+            "format": ".1f"
+          },
+          {
+            "field": "Change in per cent",
+            "type": "quantitative",
+            "title": "Change (per cent)",
+            "format": "+.1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Change in per cent'] >= 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "fontSize": 12.5,
+        "color": "#4a443d"
+      },
+      "encoding": {
+        "x": {
+          "field": "Change in per cent",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Change label"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum['Change in per cent'] < 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -5,
+        "fontSize": 12.5,
+        "color": "#4a443d"
+      },
+      "encoding": {
+        "x": {
+          "field": "Change in per cent",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "Change label"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#23201c",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "x": {
+          "datum": 0,
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+}

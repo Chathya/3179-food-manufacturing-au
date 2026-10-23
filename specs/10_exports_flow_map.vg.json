@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Flow map on an Equal Earth world map centred on the Pacific, with ocean and latitude and longitude lines. Lines run from Australia to the fifteen biggest buyers of Australian manufactured food; line thickness shows export value. A menu filters by food industry (Shneiderman: filter).",
+  "description": "Flow map on an Equal Earth world map centred on the Pacific, with ocean and latitude and longitude lines. Curved lines run from Australia to the fifteen biggest buyers of Australian manufactured food; line thickness shows export value. Each curve is a quadratic Bezier curve calculated inside this specification. A menu filters by food industry (Shneiderman: filter).",
   "width": "container",
   "height": 440,
   "params": [
@@ -22,6 +22,10 @@
           "Other food products"
         ]
       }
+    },
+    {
+      "name": "labelRank",
+      "value": 3
     }
   ],
   "projection": {
@@ -108,7 +112,7 @@
       "mark": {
         "type": "geoshape",
         "fill": {
-          "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#1baf7a' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#008300' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+          "expr": "industry == 'All food industries' ? '#C97F00' : industry == 'Seafood' ? '#1B3F8B' : industry == 'Bakery products' ? '#F08A00' : industry == 'Dairy products' ? '#3F9EDC' : industry == 'Grain and cereal products' ? '#D2BC55' : industry == 'Sugar and confectionery' ? '#E27AB0' : industry == 'Fruit and vegetables' ? '#7E57C2' : industry == 'Other food products' ? '#8D8579' : industry == 'Meat products' ? '#B5301F' : '#4a2c1d'"
         },
         "fillOpacity": 0.22,
         "stroke": "#d9d2c6",
@@ -140,12 +144,12 @@
           {
             "Longitude": -28,
             "Latitude": 60,
-            "Label": "60° North"
+            "Label": "60\u00b0 North"
           },
           {
             "Longitude": -28,
             "Latitude": 30,
-            "Label": "30° North"
+            "Label": "30\u00b0 North"
           },
           {
             "Longitude": -28,
@@ -155,37 +159,37 @@
           {
             "Longitude": -28,
             "Latitude": -30,
-            "Label": "30° South"
+            "Label": "30\u00b0 South"
           },
           {
             "Longitude": -28,
             "Latitude": -60,
-            "Label": "60° South"
+            "Label": "60\u00b0 South"
           },
           {
             "Longitude": 60,
             "Latitude": -72,
-            "Label": "60° East"
+            "Label": "60\u00b0 East"
           },
           {
             "Longitude": 120,
             "Latitude": -72,
-            "Label": "120° East"
+            "Label": "120\u00b0 East"
           },
           {
             "Longitude": 180,
             "Latitude": -72,
-            "Label": "180°"
+            "Label": "180\u00b0"
           },
           {
             "Longitude": -120,
             "Latitude": -72,
-            "Label": "120° West"
+            "Label": "120\u00b0 West"
           },
           {
             "Longitude": -60,
             "Latitude": -72,
-            "Label": "60° West"
+            "Label": "60\u00b0 West"
           }
         ]
       },
@@ -260,26 +264,30 @@
             }
           ],
           "mark": {
-            "type": "rule",
+            "type": "line",
             "color": {
-              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#FAD000' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#9A8180' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+              "expr": "industry == 'All food industries' ? '#C97F00' : industry == 'Seafood' ? '#1B3F8B' : industry == 'Bakery products' ? '#F08A00' : industry == 'Dairy products' ? '#3F9EDC' : industry == 'Grain and cereal products' ? '#D2BC55' : industry == 'Sugar and confectionery' ? '#E27AB0' : industry == 'Fruit and vegetables' ? '#7E57C2' : industry == 'Other food products' ? '#8D8579' : industry == 'Meat products' ? '#B5301F' : '#4a2c1d'"
             },
-            "strokeCap": "round"
+            "strokeCap": "round",
+            "strokeJoin": "round",
+            "interpolate": "linear"
           },
           "encoding": {
             "longitude": {
-              "field": "Origin longitude",
+              "field": "Curve longitude",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "Origin latitude",
+              "field": "Curve latitude",
               "type": "quantitative"
             },
-            "longitude2": {
-              "field": "Longitude"
+            "order": {
+              "field": "t",
+              "type": "quantitative"
             },
-            "latitude2": {
-              "field": "Latitude"
+            "detail": {
+              "field": "Country",
+              "type": "nominal"
             },
             "strokeWidth": {
               "field": "Exports",
@@ -287,8 +295,8 @@
               "title": "Food exports (million dollars)",
               "scale": {
                 "range": [
-                  1,
-                  12
+                  0.8,
+                  9
                 ],
                 "zero": true
               },
@@ -310,7 +318,7 @@
                 "param": "focus",
                 "value": 0.85
               },
-              "value": 0.2
+              "value": 0.35
             },
             "tooltip": [
               {
@@ -335,13 +343,64 @@
                 "title": "Rank among buyers"
               }
             ]
-          }
+          },
+          "transform": [
+            {
+              "calculate": "sequence(0, 1.0001, 0.05)",
+              "as": "t"
+            },
+            {
+              "flatten": [
+                "t"
+              ]
+            },
+            {
+              "calculate": "((datum['Longitude'] - 150 + 540) % 360) - 180",
+              "as": "Destination x"
+            },
+            {
+              "calculate": "datum['Destination x'] + 16.2",
+              "as": "dx"
+            },
+            {
+              "calculate": "datum['Latitude'] + 25.3",
+              "as": "dy"
+            },
+            {
+              "calculate": "sqrt(datum['dx'] * datum['dx'] + datum['dy'] * datum['dy'])",
+              "as": "Length"
+            },
+            {
+              "calculate": "(datum['dx'] >= 0 ? -datum['dy'] : datum['dy']) / datum['Length']",
+              "as": "nx"
+            },
+            {
+              "calculate": "abs(datum['dx']) / datum['Length']",
+              "as": "ny"
+            },
+            {
+              "calculate": "-16.2 + datum['dx'] / 2 + 0.24 * datum['Length'] * datum['nx']",
+              "as": "Control x"
+            },
+            {
+              "calculate": "-25.3 + datum['dy'] / 2 + 0.24 * datum['Length'] * datum['ny']",
+              "as": "Control y"
+            },
+            {
+              "calculate": "150 + pow(1 - datum['t'], 2) * -16.2 + 2 * (1 - datum['t']) * datum['t'] * datum['Control x'] + pow(datum['t'], 2) * datum['Destination x']",
+              "as": "Curve longitude"
+            },
+            {
+              "calculate": "pow(1 - datum['t'], 2) * -25.3 + 2 * (1 - datum['t']) * datum['t'] * datum['Control y'] + pow(datum['t'], 2) * datum['Latitude']",
+              "as": "Curve latitude"
+            }
+          ]
         },
         {
           "mark": {
             "type": "circle",
             "color": {
-              "expr": "industry == 'All food industries' ? '#4a2c1d' : industry == 'Seafood' ? '#2a78d6' : industry == 'Bakery products' ? '#eb6834' : industry == 'Dairy products' ? '#FAD000' : industry == 'Grain and cereal products' ? '#eda100' : industry == 'Sugar and confectionery' ? '#e87ba4' : industry == 'Fruit and vegetables' ? '#9A8180' : industry == 'Other food products' ? '#6250d6' : industry == 'Meat products' ? '#e34948' : '#4a2c1d'"
+              "expr": "industry == 'All food industries' ? '#C97F00' : industry == 'Seafood' ? '#1B3F8B' : industry == 'Bakery products' ? '#F08A00' : industry == 'Dairy products' ? '#3F9EDC' : industry == 'Grain and cereal products' ? '#D2BC55' : industry == 'Sugar and confectionery' ? '#E27AB0' : industry == 'Fruit and vegetables' ? '#7E57C2' : industry == 'Other food products' ? '#8D8579' : industry == 'Meat products' ? '#B5301F' : '#4a2c1d'"
             },
             "size": 40,
             "stroke": "#ffffff",
@@ -374,7 +433,7 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0) && datum['Country'] != 'South Korea'"
+              "filter": "datum['Rank'] <= labelRank && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt', 'Hong Kong', 'United Arab Emirates'], datum['Country']) >= 0) && datum['Country'] != 'South Korea' && datum['Country'] != 'Malaysia'"
             }
           ],
           "mark": {
@@ -406,7 +465,7 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0)"
+              "filter": "datum['Rank'] <= labelRank && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt', 'Hong Kong', 'United Arab Emirates'], datum['Country']) >= 0) && datum['Country'] != 'India' && datum['Country'] != 'United Arab Emirates'"
             }
           ],
           "mark": {
@@ -438,14 +497,14 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && datum['Country'] == 'South Korea'"
+              "filter": "datum['Rank'] <= labelRank && datum['Country'] == 'South Korea'"
             }
           ],
           "mark": {
             "type": "text",
             "align": "right",
             "dx": -8,
-            "dy": -8,
+            "dy": -19,
             "fontSize": 12,
             "fontWeight": 600,
             "color": "#23201c",
@@ -470,7 +529,39 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0) && datum['Country'] != 'South Korea'"
+              "filter": "datum['Rank'] <= labelRank && (datum['Country'] == 'Malaysia' || datum['Country'] == 'India' || datum['Country'] == 'United Arab Emirates')"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 9,
+            "dy": 14,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "stroke": "#ffffff",
+            "strokeWidth": 3,
+            "strokeOpacity": 0.8
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= labelRank && !(indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt', 'Hong Kong', 'United Arab Emirates'], datum['Country']) >= 0) && datum['Country'] != 'South Korea' && datum['Country'] != 'Malaysia'"
             }
           ],
           "mark": {
@@ -499,7 +590,7 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt'], datum['Country']) >= 0)"
+              "filter": "datum['Rank'] <= labelRank && (indexof(['China', 'India', 'Indonesia', 'Thailand', 'Bangladesh', 'Egypt', 'Hong Kong', 'United Arab Emirates'], datum['Country']) >= 0) && datum['Country'] != 'India' && datum['Country'] != 'United Arab Emirates'"
             }
           ],
           "mark": {
@@ -528,14 +619,43 @@
         {
           "transform": [
             {
-              "filter": "datum['Rank'] <= 6 && datum['Country'] == 'South Korea'"
+              "filter": "datum['Rank'] <= labelRank && datum['Country'] == 'South Korea'"
             }
           ],
           "mark": {
             "type": "text",
             "align": "right",
             "dx": -8,
-            "dy": -8,
+            "dy": -19,
+            "fontSize": 12,
+            "fontWeight": 600,
+            "color": "#23201c"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Country"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Rank'] <= labelRank && (datum['Country'] == 'Malaysia' || datum['Country'] == 'India' || datum['Country'] == 'United Arab Emirates')"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 9,
+            "dy": 14,
             "fontSize": 12,
             "fontWeight": 600,
             "color": "#23201c"
@@ -603,7 +723,7 @@
         "lineBreak": "|",
         "fontSize": 12.5,
         "fontWeight": "bold",
-        "color": "#4a2c1d",
+        "color": "#8a5a00",
         "align": "center"
       },
       "encoding": {

@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Proportional symbol map. Each circle is one of Australia's eight dairy regions, sized by the milk it produced in 2024 to 2025. Circle area, not radius, is proportional to milk volume.",
   "width": "container",
-  "height": 430,
+  "height": 410,
   "projection": {
     "type": "conicEqualArea",
     "parallels": [
@@ -62,7 +62,7 @@
         {
           "mark": {
             "type": "circle",
-            "color": "#1baf7a",
+            "color": "#3F9EDC",
             "opacity": 0.7,
             "stroke": "#ffffff",
             "strokeWidth": 2
@@ -83,7 +83,7 @@
               "legend": {
                 "orient": "bottom-left",
                 "direction": "horizontal",
-                "symbolFillColor": "#1baf7a",
+                "symbolFillColor": "#3F9EDC",
                 "symbolStrokeColor": "#ffffff",
                 "format": ",.0f",
                 "values": [
@@ -102,7 +102,7 @@
               {
                 "field": "Milk",
                 "type": "quantitative",
-                "title": "Milk produced in the year to June 2025 (million litres)",
+                "title": "Milk produced, July 2024 to June 2025 (million litres)",
                 "format": ",.0f"
               },
               {
@@ -192,8 +192,8 @@
       "data": {
         "values": [
           {
-            "Longitude": 128.6,
-            "Latitude": -36.4,
+            "Longitude": 163.6,
+            "Latitude": -38.3,
             "Text": "Victoria's three regions|make 67% of all milk"
           }
         ]
@@ -201,10 +201,11 @@
       "mark": {
         "type": "text",
         "lineBreak": "|",
-        "fontSize": 12.5,
+        "fontSize": 13,
         "fontWeight": "bold",
-        "color": "#13875e",
-        "align": "center"
+        "color": "#1A639A",
+        "align": "center",
+        "baseline": "bottom"
       },
       "encoding": {
         "longitude": {
@@ -219,9 +220,82 @@
           "field": "Text"
         }
       }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Longitude": 156.0,
+            "Latitude": -37.9,
+            "Order": 0
+          },
+          {
+            "Longitude": 150.2,
+            "Latitude": -37.9,
+            "Order": 1
+          }
+        ]
+      },
+      "mark": {
+        "type": "line",
+        "color": "#1A639A",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "order": {
+          "field": "Order",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Longitude": 149.9,
+            "Latitude": -37.9
+          }
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "shape": "triangle-up",
+        "filled": true,
+        "size": 90,
+        "color": "#1A639A",
+        "angle": 270
+      },
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        }
+      }
     }
   ],
   "view": {
     "stroke": null
+  },
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "padding": {
+    "left": 5,
+    "top": 5,
+    "bottom": 5,
+    "right": 78
   }
 }

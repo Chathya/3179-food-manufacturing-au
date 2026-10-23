@@ -16,9 +16,9 @@
           "recent"
         ],
         "labels": [
-          "All years, 2007 to 2025",
-          "First decade, 2007 to 2016",
-          "Recent years, 2019 to 2025"
+          "All years",
+          "2007 to 2016",
+          "2019 to 2025"
         ],
         "name": "Zoom to "
       }
@@ -85,7 +85,7 @@
     {
       "mark": {
         "type": "line",
-        "strokeWidth": 2.5,
+        "strokeWidth": 3.2,
         "interpolate": "monotone",
         "clip": true
       },
@@ -100,7 +100,7 @@
             }
           },
           "axis": {
-            "title": "Year ending June",
+            "title": null,
             "format": "d",
             "tickMinStep": 1,
             "grid": false
@@ -109,7 +109,7 @@
         "y": {
           "field": "Index",
           "type": "quantitative",
-          "title": "Index, year to June 2007 equals 100",
+          "title": null,
           "scale": {
             "zero": false,
             "domain": {
@@ -130,8 +130,8 @@
               "All other manufacturing"
             ],
             "range": [
-              "#4a2c1d",
-              "#a39b8f"
+              "#D08800",
+              "#5B7C99"
             ]
           },
           "legend": {
@@ -272,7 +272,7 @@
           4,
           4
         ],
-        "color": "#8a837a",
+        "color": "#6F675E",
         "strokeWidth": 1,
         "clip": true
       },
@@ -287,6 +287,84 @@
             "nice": false,
             "zero": false
           }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Year ending June": 2009,
+            "Text": "2009: financial crisis"
+          },
+          {
+            "Year ending June": 2020,
+            "Text": "2020: Covid-19"
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          3,
+          3
+        ],
+        "color": "#8a8176",
+        "strokeWidth": 1.2,
+        "clip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "Year ending June",
+          "type": "quantitative",
+          "scale": {
+            "nice": false,
+            "domain": {
+              "expr": "[x0, x1]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "Year ending June": 2009,
+            "Text": "2009: financial crisis"
+          },
+          {
+            "Year ending June": 2020,
+            "Text": "2020: Covid-19"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "dx": 5,
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#3d3731",
+        "clip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "Year ending June",
+          "type": "quantitative",
+          "scale": {
+            "nice": false,
+            "domain": {
+              "expr": "[x0, x1]"
+            }
+          }
+        },
+        "y": {
+          "value": 4
+        },
+        "text": {
+          "field": "Text"
         }
       }
     },
@@ -334,9 +412,11 @@
           "field": "Growth label"
         },
         "color": {
-          "field": "Industry",
-          "type": "nominal",
-          "legend": null
+          "condition": {
+            "test": "datum['Industry'] == 'Food product manufacturing'",
+            "value": "#8a5a00"
+          },
+          "value": "#3f5f7f"
         }
       }
     }
