@@ -176,16 +176,17 @@
         {
           "transform": [
             {
-              "filter": "datum['Label'] == 'yes' && indexof(['Barossa Valley','Coonawarra'], datum['Region']) < 0"
+              "filter": "datum['Label'] == 'yes' && indexof(['Barossa Valley','Coonawarra','Yarra Valley'], datum['Region']) < 0"
             }
           ],
           "mark": {
             "type": "text",
-            "dy": -15,
+            "dy": -13,
             "fontSize": 11.5,
             "fontWeight": 600,
             "color": "#23201c",
-            "lineBreak": "|"
+            "lineBreak": "|",
+            "baseline": "bottom"
           },
           "encoding": {
             "longitude": {
@@ -204,18 +205,78 @@
         {
           "transform": [
             {
-              "filter": "indexof(['Barossa Valley','Coonawarra'], datum['Region']) >= 0"
+              "filter": "datum['Region'] == 'Barossa Valley'"
             }
           ],
           "mark": {
             "type": "text",
-            "dy": 0,
             "fontSize": 11.5,
             "fontWeight": 600,
             "color": "#23201c",
             "align": "right",
-            "dx": -11,
-            "baseline": "middle"
+            "baseline": "middle",
+            "dx": -12,
+            "dy": -4
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Spike top",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Region"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Region'] == 'Coonawarra'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 11.5,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "align": "right",
+            "baseline": "middle",
+            "dx": -10,
+            "dy": 12
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Spike top",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Region"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum['Region'] == 'Yarra Valley'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 11.5,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 12,
+            "dy": 14
           },
           "encoding": {
             "longitude": {
