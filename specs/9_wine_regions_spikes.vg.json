@@ -51,8 +51,8 @@
           },
           {
             "State": "Victoria",
-            "Longitude": 144.2,
-            "Latitude": -37.0
+            "Longitude": 143.0,
+            "Latitude": -37.6
           }
         ]
       },
@@ -106,6 +106,10 @@
         {
           "calculate": "datum['Latitude'] + 3.5 * datum['Crush'] / datum['Largest']",
           "as": "Spike top"
+        },
+        {
+          "calculate": "datum['Region'] == 'Murray Darling and Swan Hill' ? 'Murray Darling|and Swan Hill' : datum['Region']",
+          "as": "Label text"
         }
       ],
       "layer": [
@@ -113,7 +117,7 @@
           "mark": {
             "type": "rule",
             "color": "#7b2440",
-            "strokeWidth": 4,
+            "strokeWidth": 2.6,
             "strokeCap": "round",
             "opacity": 0.85
           },
@@ -156,7 +160,7 @@
           "mark": {
             "type": "circle",
             "color": "#7b2440",
-            "size": 30
+            "size": 18
           },
           "encoding": {
             "longitude": {
@@ -172,15 +176,46 @@
         {
           "transform": [
             {
-              "filter": "datum['Label'] == 'yes'"
+              "filter": "datum['Label'] == 'yes' && indexof(['Barossa Valley','Coonawarra'], datum['Region']) < 0"
             }
           ],
           "mark": {
             "type": "text",
-            "dy": -8,
+            "dy": -15,
             "fontSize": 11.5,
             "fontWeight": 600,
-            "color": "#23201c"
+            "color": "#23201c",
+            "lineBreak": "|"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "Longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "Spike top",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "Label text"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "indexof(['Barossa Valley','Coonawarra'], datum['Region']) >= 0"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "dy": 0,
+            "fontSize": 11.5,
+            "fontWeight": 600,
+            "color": "#23201c",
+            "align": "right",
+            "dx": -11,
+            "baseline": "middle"
           },
           "encoding": {
             "longitude": {
