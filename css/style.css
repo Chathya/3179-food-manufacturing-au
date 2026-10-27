@@ -551,12 +551,6 @@ h1, h2, .takeaways h2, .checkout h2 { color: var(--title); }
 /* v10: second line of the main title has its own bright blue */
 .h1-accent { color: #b1435f; }
 
-/* v11: hinge number and text sit side by side, vertically centred, no orphan word */
-.hinge { align-items: center; flex-wrap: nowrap; gap: 32px; }
-.hinge-stat { flex: none; }
-.hinge-text { max-width: 30em; }
-@media (max-width: 900px) { .hinge { flex-wrap: wrap; align-items: flex-start; gap: 10px; } }
-
 /* v12: keep text blocks to about 10 words per line */
 .standfirst { max-width: 20em; }
 .lead { max-width: 19.5em; }
