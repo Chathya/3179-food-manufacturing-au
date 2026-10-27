@@ -103,6 +103,57 @@
           }
         ]
       }
+    },
+    {
+      "transform": [
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "Change",
+              "as": "hi"
+            },
+            {
+              "op": "min",
+              "field": "Change",
+              "as": "lo"
+            }
+          ],
+          "groupby": []
+        },
+        {
+          "calculate": "format(datum.Change,'+.0f') + '%'",
+          "as": "Lbl"
+        },
+        {
+          "filter": "datum.Change == datum.hi || datum.Change == datum.lo"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#ffffff"
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "Industry",
+          "type": "nominal",
+          "sort": {
+            "field": "Workers",
+            "op": "mean",
+            "order": "descending"
+          }
+        },
+        "text": {
+          "field": "Lbl",
+          "type": "nominal"
+        }
+      }
     }
   ],
   "encoding": {},
