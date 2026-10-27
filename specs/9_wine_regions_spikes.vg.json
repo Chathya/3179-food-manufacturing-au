@@ -160,7 +160,7 @@
      "mark": {
       "type": "circle",
       "color": "#7b2440",
-      "size": 18
+      "size": 40
      },
      "encoding": {
       "longitude": {
@@ -170,7 +170,25 @@
       "latitude": {
        "field": "Latitude",
        "type": "quantitative"
-      }
+      },
+      "tooltip": [
+       {
+        "field": "Region",
+        "type": "nominal",
+        "title": "Wine region"
+       },
+       {
+        "field": "State",
+        "type": "nominal",
+        "title": "State"
+       },
+       {
+        "field": "Crush",
+        "type": "quantitative",
+        "title": "Grapes crushed (tonnes)",
+        "format": ",.0f"
+       }
+      ]
      }
     },
     {

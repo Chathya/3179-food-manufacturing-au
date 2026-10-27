@@ -563,3 +563,16 @@ h1, h2, .takeaways h2, .checkout h2 { color: var(--title); }
 .footer-sources { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
 .footer-text { max-width: 26em; }
 @media (max-width: 1000px) { .footer-sources { grid-template-columns: 1fr; } }
+
+/* v14: even out chart subtitles so no word is left alone on the last line */
+.card .chart-sub { text-wrap: balance; }
+
+/* v15: short subtitles and the closing sentences each stay on one line (wrap on small screens) */
+.card .chart-sub.one-line { max-width: none; text-wrap: nowrap; }
+.checkout-text { max-width: none; font-size: 1.25rem; }
+.checkout-text span { white-space: nowrap; }
+.checkout-grid { grid-template-columns: minmax(0, 1.75fr) minmax(380px, 1fr); }
+@media (max-width: 1100px) {
+  .card .chart-sub.one-line { text-wrap: balance; }
+  .checkout-text span { white-space: normal; }
+}
