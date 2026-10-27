@@ -81,7 +81,7 @@
                 "zero": true
               },
               "legend": {
-                "orient": "bottom-left",
+                "orient": "bottom",
                 "direction": "horizontal",
                 "symbolFillColor": "#3F9EDC",
                 "symbolStrokeColor": "#ffffff",
@@ -90,7 +90,9 @@
                   400,
                   1000,
                   1900
-                ]
+                ],
+                "offset": 14,
+                "titleOrient": "left"
               }
             },
             "tooltip": [
