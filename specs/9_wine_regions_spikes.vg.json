@@ -1,355 +1,355 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Spike map of south-eastern Australia. Each spike stands on a wine region; spike height is proportional to the tonnes of grapes crushed in the 2026 vintage. A regional map is used because almost all wine regions are in the south-east.",
-  "width": "container",
-  "height": 430,
-  "projection": {
-    "type": "conicEqualArea",
-    "parallels": [
-      -30,
-      -38
-    ],
-    "rotate": [
-      -143.5,
-      0
-    ],
-    "center": [
-      0,
-      -36.0
-    ],
-    "scale": 1950
-  },
-  "layer": [
-    {
-      "data": {
-        "url": "data/geo/au_states.topo.json",
-        "format": {
-          "type": "topojson",
-          "feature": "states"
-        }
-      },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#ece7de",
-        "stroke": "#ffffff",
-        "strokeWidth": 1.2,
-        "clip": true
-      }
-    },
-    {
-      "data": {
-        "values": [
-          {
-            "State": "South Australia",
-            "Longitude": 135.6,
-            "Latitude": -31.2
-          },
-          {
-            "State": "New South Wales",
-            "Longitude": 148.6,
-            "Latitude": -31.6
-          },
-          {
-            "State": "Victoria",
-            "Longitude": 143.0,
-            "Latitude": -37.6
-          }
-        ]
-      },
-      "mark": {
-        "type": "text",
-        "fontSize": 13,
-        "fontStyle": "italic",
-        "color": "#8A8176",
-        "clip": true
-      },
-      "encoding": {
-        "longitude": {
-          "field": "Longitude",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "Latitude",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "State"
-        }
-      }
-    },
-    {
-      "data": {
-        "url": "data/clean/wine_regions.csv"
-      },
-      "transform": [
-        {
-          "calculate": "toNumber(datum['Grapes crushed (tonnes)'])",
-          "as": "Crush"
-        },
-        {
-          "calculate": "toNumber(datum['Longitude'])",
-          "as": "Longitude"
-        },
-        {
-          "calculate": "toNumber(datum['Latitude'])",
-          "as": "Latitude"
-        },
-        {
-          "joinaggregate": [
-            {
-              "op": "max",
-              "field": "Crush",
-              "as": "Largest"
-            }
-          ]
-        },
-        {
-          "calculate": "datum['Latitude'] + 3.5 * datum['Crush'] / datum['Largest']",
-          "as": "Spike top"
-        },
-        {
-          "calculate": "datum['Region'] == 'Murray Darling and Swan Hill' ? 'Murray Darling|and Swan Hill' : datum['Region']",
-          "as": "Label text"
-        }
-      ],
-      "layer": [
-        {
-          "mark": {
-            "type": "rule",
-            "color": "#7b2440",
-            "strokeWidth": 2.6,
-            "strokeCap": "round",
-            "opacity": 0.85
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Latitude",
-              "type": "quantitative"
-            },
-            "longitude2": {
-              "field": "Longitude"
-            },
-            "latitude2": {
-              "field": "Spike top"
-            },
-            "tooltip": [
-              {
-                "field": "Region",
-                "type": "nominal",
-                "title": "Wine region"
-              },
-              {
-                "field": "State",
-                "type": "nominal",
-                "title": "State"
-              },
-              {
-                "field": "Crush",
-                "type": "quantitative",
-                "title": "Grapes crushed (tonnes)",
-                "format": ",.0f"
-              }
-            ]
-          }
-        },
-        {
-          "mark": {
-            "type": "circle",
-            "color": "#7b2440",
-            "size": 18
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Latitude",
-              "type": "quantitative"
-            }
-          }
-        },
-        {
-          "transform": [
-            {
-              "filter": "datum['Label'] == 'yes' && indexof(['Barossa Valley','Coonawarra','Yarra Valley'], datum['Region']) < 0"
-            }
-          ],
-          "mark": {
-            "type": "text",
-            "dy": -13,
-            "fontSize": 11.5,
-            "fontWeight": 600,
-            "color": "#23201c",
-            "lineBreak": "|",
-            "baseline": "bottom"
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Spike top",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "Label text"
-            }
-          }
-        },
-        {
-          "transform": [
-            {
-              "filter": "datum['Region'] == 'Barossa Valley'"
-            }
-          ],
-          "mark": {
-            "type": "text",
-            "fontSize": 11.5,
-            "fontWeight": 600,
-            "color": "#23201c",
-            "align": "right",
-            "baseline": "middle",
-            "dx": -12,
-            "dy": -4
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Spike top",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "Region"
-            }
-          }
-        },
-        {
-          "transform": [
-            {
-              "filter": "datum['Region'] == 'Coonawarra'"
-            }
-          ],
-          "mark": {
-            "type": "text",
-            "fontSize": 11.5,
-            "fontWeight": 600,
-            "color": "#23201c",
-            "align": "right",
-            "baseline": "middle",
-            "dx": -10,
-            "dy": 12
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Spike top",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "Region"
-            }
-          }
-        },
-        {
-          "transform": [
-            {
-              "filter": "datum['Region'] == 'Yarra Valley'"
-            }
-          ],
-          "mark": {
-            "type": "text",
-            "fontSize": 11.5,
-            "fontWeight": 600,
-            "color": "#23201c",
-            "align": "left",
-            "baseline": "middle",
-            "dx": 12,
-            "dy": 14
-          },
-          "encoding": {
-            "longitude": {
-              "field": "Longitude",
-              "type": "quantitative"
-            },
-            "latitude": {
-              "field": "Spike top",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "Region"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "data": {
-        "values": [
-          {
-            "Longitude": 151.6,
-            "Latitude": -38.6,
-            "Text": "Three inland river regions|crushed 71% of all grapes"
-          }
-        ]
-      },
-      "mark": {
-        "type": "text",
-        "lineBreak": "|",
-        "fontSize": 12.5,
-        "fontWeight": "bold",
-        "color": "#7b2440",
-        "align": "center"
-      },
-      "encoding": {
-        "longitude": {
-          "field": "Longitude",
-          "type": "quantitative"
-        },
-        "latitude": {
-          "field": "Latitude",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "Text"
-        }
-      }
-    },
-    {
-      "data": {
-        "values": [
-          {}
-        ]
-      },
-      "mark": {
-        "type": "text",
-        "x": {
-          "expr": "width"
-        },
-        "y": {
-          "expr": "height"
-        },
-        "align": "right",
-        "baseline": "bottom",
-        "fontSize": 12,
-        "color": "#4F4841",
-        "lineBreak": "|",
-        "text": "Spike height shows tonnes crushed.|Hover over a spike for the exact number."
-      }
-    }
+ "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+ "description": "Spike map of south-eastern Australia. Each spike stands on a wine region; spike height is proportional to the tonnes of grapes crushed in the 2026 vintage. A regional map is used because almost all wine regions are in the south-east.",
+ "width": "container",
+ "height": 430,
+ "projection": {
+  "type": "conicEqualArea",
+  "parallels": [
+   -30,
+   -38
   ],
-  "view": {
-    "stroke": null
+  "rotate": [
+   -143.5,
+   0
+  ],
+  "center": [
+   0,
+   -36.0
+  ],
+  "scale": 1950
+ },
+ "layer": [
+  {
+   "data": {
+    "url": "data/geo/au_states.topo.json",
+    "format": {
+     "type": "topojson",
+     "feature": "states"
+    }
+   },
+   "mark": {
+    "type": "geoshape",
+    "fill": "#ece7de",
+    "stroke": "#ffffff",
+    "strokeWidth": 1.2,
+    "clip": true
+   }
+  },
+  {
+   "data": {
+    "values": [
+     {
+      "State": "South Australia",
+      "Longitude": 135.6,
+      "Latitude": -31.2
+     },
+     {
+      "State": "New South Wales",
+      "Longitude": 148.6,
+      "Latitude": -31.6
+     },
+     {
+      "State": "Victoria",
+      "Longitude": 143.0,
+      "Latitude": -37.6
+     }
+    ]
+   },
+   "mark": {
+    "type": "text",
+    "fontSize": 13,
+    "fontStyle": "italic",
+    "color": "#8A8176",
+    "clip": true
+   },
+   "encoding": {
+    "longitude": {
+     "field": "Longitude",
+     "type": "quantitative"
+    },
+    "latitude": {
+     "field": "Latitude",
+     "type": "quantitative"
+    },
+    "text": {
+     "field": "State"
+    }
+   }
+  },
+  {
+   "data": {
+    "url": "data/clean/wine_regions.csv"
+   },
+   "transform": [
+    {
+     "calculate": "toNumber(datum['Grapes crushed (tonnes)'])",
+     "as": "Crush"
+    },
+    {
+     "calculate": "toNumber(datum['Longitude'])",
+     "as": "Longitude"
+    },
+    {
+     "calculate": "toNumber(datum['Latitude'])",
+     "as": "Latitude"
+    },
+    {
+     "joinaggregate": [
+      {
+       "op": "max",
+       "field": "Crush",
+       "as": "Largest"
+      }
+     ]
+    },
+    {
+     "calculate": "datum['Latitude'] + 3.5 * datum['Crush'] / datum['Largest']",
+     "as": "Spike top"
+    },
+    {
+     "calculate": "datum['Region'] == 'Murray Darling and Swan Hill' ? 'Murray Darling|and Swan Hill' : datum['Region']",
+     "as": "Label text"
+    }
+   ],
+   "layer": [
+    {
+     "mark": {
+      "type": "rule",
+      "color": "#7b2440",
+      "strokeWidth": 2.6,
+      "strokeCap": "round",
+      "opacity": 0.85
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Latitude",
+       "type": "quantitative"
+      },
+      "longitude2": {
+       "field": "Longitude"
+      },
+      "latitude2": {
+       "field": "Spike top"
+      },
+      "tooltip": [
+       {
+        "field": "Region",
+        "type": "nominal",
+        "title": "Wine region"
+       },
+       {
+        "field": "State",
+        "type": "nominal",
+        "title": "State"
+       },
+       {
+        "field": "Crush",
+        "type": "quantitative",
+        "title": "Grapes crushed (tonnes)",
+        "format": ",.0f"
+       }
+      ]
+     }
+    },
+    {
+     "mark": {
+      "type": "circle",
+      "color": "#7b2440",
+      "size": 18
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Latitude",
+       "type": "quantitative"
+      }
+     }
+    },
+    {
+     "transform": [
+      {
+       "filter": "datum['Label'] == 'yes' && indexof(['Barossa Valley','Coonawarra','Yarra Valley'], datum['Region']) < 0"
+      }
+     ],
+     "mark": {
+      "type": "text",
+      "dy": -13,
+      "fontSize": 11.5,
+      "fontWeight": 600,
+      "color": "#23201c",
+      "lineBreak": "|",
+      "baseline": "bottom"
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Spike top",
+       "type": "quantitative"
+      },
+      "text": {
+       "field": "Label text"
+      }
+     }
+    },
+    {
+     "transform": [
+      {
+       "filter": "datum['Region'] == 'Barossa Valley'"
+      }
+     ],
+     "mark": {
+      "type": "text",
+      "fontSize": 11.5,
+      "fontWeight": 600,
+      "color": "#23201c",
+      "align": "right",
+      "baseline": "middle",
+      "dx": -12,
+      "dy": -4
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Spike top",
+       "type": "quantitative"
+      },
+      "text": {
+       "field": "Region"
+      }
+     }
+    },
+    {
+     "transform": [
+      {
+       "filter": "datum['Region'] == 'Coonawarra'"
+      }
+     ],
+     "mark": {
+      "type": "text",
+      "fontSize": 11.5,
+      "fontWeight": 600,
+      "color": "#23201c",
+      "align": "right",
+      "baseline": "middle",
+      "dx": -10,
+      "dy": 12
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Spike top",
+       "type": "quantitative"
+      },
+      "text": {
+       "field": "Region"
+      }
+     }
+    },
+    {
+     "transform": [
+      {
+       "filter": "datum['Region'] == 'Yarra Valley'"
+      }
+     ],
+     "mark": {
+      "type": "text",
+      "fontSize": 11.5,
+      "fontWeight": 600,
+      "color": "#23201c",
+      "align": "left",
+      "baseline": "middle",
+      "dx": 12,
+      "dy": 14
+     },
+     "encoding": {
+      "longitude": {
+       "field": "Longitude",
+       "type": "quantitative"
+      },
+      "latitude": {
+       "field": "Spike top",
+       "type": "quantitative"
+      },
+      "text": {
+       "field": "Region"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "data": {
+    "values": [
+     {
+      "Longitude": 151.6,
+      "Latitude": -38.6,
+      "Text": "Three inland river regions|crushed 71% of all grapes"
+     }
+    ]
+   },
+   "mark": {
+    "type": "text",
+    "lineBreak": "|",
+    "fontSize": 12.5,
+    "fontWeight": "bold",
+    "color": "#7b2440",
+    "align": "center"
+   },
+   "encoding": {
+    "longitude": {
+     "field": "Longitude",
+     "type": "quantitative"
+    },
+    "latitude": {
+     "field": "Latitude",
+     "type": "quantitative"
+    },
+    "text": {
+     "field": "Text"
+    }
+   }
+  },
+  {
+   "data": {
+    "values": [
+     {}
+    ]
+   },
+   "mark": {
+    "type": "text",
+    "x": {
+     "expr": "width"
+    },
+    "y": {
+     "expr": "height"
+    },
+    "align": "right",
+    "baseline": "bottom",
+    "fontSize": 12,
+    "color": "#4F4841",
+    "lineBreak": "|",
+    "text": "Spike height shows tonnes crushed.|Hover over a spike for the exact number."
+   }
   }
+ ],
+ "view": {
+  "stroke": null
+ }
 }
